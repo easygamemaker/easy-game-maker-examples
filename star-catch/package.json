@@ -1,0 +1,16 @@
+{
+  "name": "star-catch",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "egm simulate",
+    "editor": "egm editor",
+    "build": "egm build web"
+  },
+  "dependencies": {
+    "easy-game-maker": "file:../../easy-game-maker"
+  },
+  "devDependencies": {
+    "vite": "^5.3.0"
+  }
+}

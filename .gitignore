@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+devflix/
+__pycache__/
+*.py[cod]
+*.db
+*.pid
+**/public/__e2e.html
+.egm-e2e-report.json
+*.log
+.DS_Store

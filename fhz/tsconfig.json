@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "paths": {
+      "easy-game-maker":          ["../../easy-game-maker/src/engine/index.ts"],
+      "easy-game-maker/testing":  ["../../easy-game-maker/src/testing/index.ts"],
+      "easy-game-maker/e2e":      ["../../easy-game-maker/src/testing/e2e/index.ts"]
+    }
+  },
+  "include": ["src"]
+}
