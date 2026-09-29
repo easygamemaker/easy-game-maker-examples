@@ -42,12 +42,13 @@ egm simulate          # open simulator at http://localhost:5173
 ## Building
 
 ```bash
-egm build web          # static web bundle
-egm build ios          # Xcode project
-egm build android      # Android Studio project
-egm build macos        # macOS desktop app
-egm build windows      # Windows installer
+egm build desktop            # all desktop targets
+egm build desktop macos      # .app + .dmg
+egm build desktop windows    # .msi + .exe
+egm build desktop linux      # .AppImage + .deb
 ```
+
+Only desktop builds are available for now. The web, iOS, Android and TV targets are coming soon.
 
 ## Tests
 

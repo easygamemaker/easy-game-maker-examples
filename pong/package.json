@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "egm simulate",
-    "build": "egm build web",
-    "build:ios": "egm build ios",
-    "build:android": "egm build android",
+    "build": "egm build desktop",
     "build:desktop": "egm build desktop",
     "preview": "vite preview",
     "test": "vitest run",

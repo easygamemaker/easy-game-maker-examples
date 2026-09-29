@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "egm simulate",
-    "build": "egm build web"
+    "build": "egm build desktop"
   },
   "dependencies": {
     "easy-game-maker": "file:../../../easy-game-maker"

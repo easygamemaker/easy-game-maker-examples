@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "egm simulate",
-    "build": "egm build web",
+    "build": "egm build desktop",
     "preview": "vite preview",
     "test": "vitest run",
     "test:unit": "vitest run src/__tests__/unit",

@@ -96,8 +96,10 @@ cd game && npm install && egm simulate
 
 ```bash
 cd game
-egm build web
-egm build ios
-egm build android
-egm build macos
+egm build desktop            # all desktop targets
+egm build desktop macos      # .app + .dmg
+egm build desktop windows    # .msi + .exe
+egm build desktop linux      # .AppImage + .deb
 ```
+
+Only desktop builds are available for now. The web, iOS, Android and TV targets are coming soon.
