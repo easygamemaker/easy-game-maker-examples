@@ -2,19 +2,20 @@ import { defineConfig } from 'easy-game-maker';
 
 export default defineConfig({
   app: {
-    name: 'Tetris',
+    name: 'Coin Run 3D',
     version: '1.0.0',
-    bundleId: 'com.egm.tetris',
+    bundleId: 'com.egm.coinrun3d',
   },
+  mode: '3d',
   display: {
-    width: 500,
-    height: 660,
-    orientation: 'portrait',
-    backgroundColor: '#0d0d1a',
+    width: 1280,
+    height: 720,
+    orientation: 'landscape',
+    backgroundColor: '#0b1d33',
   },
   build: {
     ios: { deploymentTarget: '16.0' },
     android: { minSdkVersion: 26, targetSdkVersion: 34 },
-    desktop: { width: 500, height: 660, targets: ['mac', 'windows', 'linux'] },
+    desktop: { targets: ['mac', 'windows', 'linux'] },
   },
 });

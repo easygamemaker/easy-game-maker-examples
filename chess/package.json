@@ -15,7 +15,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "easy-game-maker": "^0.2.0",
+    "easy-game-maker": "^0.2.1",
     "planck": "^1.0.4"
   },
   "devDependencies": {

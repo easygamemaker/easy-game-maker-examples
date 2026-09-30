@@ -1,0 +1,25 @@
+{
+  "name": "orbit-dodge-3d",
+  "version": "1.0.0",
+  "description": "A lane-runner space dodger built with Easy Game Maker 3D",
+  "type": "module",
+  "scripts": {
+    "dev": "egm simulate",
+    "build": "egm build desktop",
+    "build:desktop": "egm build desktop",
+    "build:web": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "easy-game-maker": "^0.2.1",
+    "three": "0.185.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.185.4",
+    "typescript": "^5.5.0",
+    "vite": "^5.3.0",
+    "vitest": "^2.1.9"
+  }
+}

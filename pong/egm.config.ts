@@ -21,7 +21,7 @@ export default defineConfig({
       targetSdkVersion: 34,
     },
     desktop: {
-      targets: ['dmg', 'msi', 'appimage'],
+      targets: ['mac', 'windows', 'linux'],
       width: 800,
       height: 500,
     },
