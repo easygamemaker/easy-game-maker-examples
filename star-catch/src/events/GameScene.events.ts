@@ -101,8 +101,8 @@ export default {
     // Build falling-object pool (dynamic — NOT in view.json)
     pool.length = 0;
     for (let i = 0; i < POOL_SIZE; i++) {
-      const shape = new RectShape({ x: 0, y: -50, width: 18, height: 18,
-        anchorX: 0.5, anchorY: 0.5, fill: '#ffd700' });
+      // anchorX and anchorY already default to 0.5 (centered) on every display object.
+      const shape = new RectShape({ x: 0, y: -50, width: 18, height: 18, fill: '#ffd700' });
       shape.visible = false;
       scene.add(shape);
       pool.push({ shape, kind: 'star', active: false, vy: STAR_SPEED });

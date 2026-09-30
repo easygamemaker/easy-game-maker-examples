@@ -1,7 +1,6 @@
 node_modules/
 dist/
 coverage/
-devflix/
 __pycache__/
 *.py[cod]
 *.db

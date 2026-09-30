@@ -7,7 +7,7 @@
     "build": "egm build desktop"
   },
   "dependencies": {
-    "easy-game-maker": "file:../../../easy-game-maker"
+    "easy-game-maker": "^0.2.0"
   },
   "devDependencies": {
     "typescript": "^5.5.0",
