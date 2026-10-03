@@ -165,6 +165,8 @@ export interface CharacterData {
   readonly gravity: number;
   readonly jumpForwardSpeed: number;
   readonly maxHealth: number;
+  /** On-screen size multiplier of the sprite (1 = the common base body height). Kept within 0.92 to 1.08. */
+  readonly visualScale?: number;
   readonly hurtbox?: CharacterHurtboxes;
   readonly moves: CharacterMoves;
 }
@@ -276,7 +278,7 @@ const DALVA: CharacterData = {
 const SACI: CharacterData = {
   id: 'saci',
   displayName: 'Saci',
-  tagline: 'One leg, one red cap, a thousand tricks.',
+  tagline: 'Folklore trickster: red cap, pipe and a thousand tricks.',
   specialName: 'Redemoinho',
   accent: '#d62839',
   walkForward: 4.6,
@@ -304,7 +306,7 @@ const SACI: CharacterData = {
 const CURUPIRA: CharacterData = {
   id: 'curupira',
   displayName: 'Curupira',
-  tagline: 'Guardian of the forest, feet turned backwards.',
+  tagline: 'Forest guardian with backwards feet: his glowing footprints point the wrong way.',
   specialName: 'Pisao da Mata',
   accent: '#3f9b4f',
   walkForward: 3,
@@ -341,6 +343,8 @@ const CRAQUE: CharacterData = {
   gravity: 0.95,
   jumpForwardSpeed: 5.2,
   maxHealth: 1000,
+  visualScale: 0.92,
+  hurtbox: { stand: { w: 88, h: 248 }, crouch: { w: 88, h: 138 }, jump: { w: 78, h: 212 } },
   moves: {
     lightPunch: lightPunch({ startup: 4, active: 3, recovery: 9, damage: 50, hitstun: 15, blockstun: 11, knockback: 28, hitbox: { x: 75, y: 140, w: 85, h: 55 } }),
     heavyKick: heavyKick({ startup: 10, active: 4, recovery: 18, damage: 110, hitstun: 20, blockstun: 16, knockback: 65, hitbox: { x: 115, y: 110, w: 120, h: 60 } }),
@@ -401,6 +405,8 @@ export const DEFAULT_HURTBOXES: CharacterHurtboxes = {
   crouch: { w: 90, h: 150 },
   jump: { w: 80, h: 230 },
 };
+
+export const visualScaleOf = (character: CharacterData): number => character.visualScale ?? 1;
 
 export function hurtboxesOf(character: CharacterData): CharacterHurtboxes {
   return character.hurtbox ?? DEFAULT_HURTBOXES;

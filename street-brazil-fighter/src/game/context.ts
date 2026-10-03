@@ -50,12 +50,16 @@ export interface SbfHook {
   winner: 0 | 1 | null;
   speed: number;
   paused: boolean;
+  /** Camera x of the last rendered frame (lets a test crop around the fighters). */
+  camX: number;
+  /** Atlas frame name drawn for each fighter in the last frame. */
+  shown: readonly [string, string];
 }
 
 /** Returns the automation hook, creating it on first use. */
 export function hook(): SbfHook {
   if (!window.__SBF__) {
-    window.__SBF__ = { scene: 'boot', mode: '1p', match: null, frame: 0, done: false, winner: null, speed: 1, paused: false };
+    window.__SBF__ = { scene: 'boot', mode: '1p', match: null, frame: 0, done: false, winner: null, speed: 1, paused: false, camX: 0, shown: ['', ''] };
   }
   return window.__SBF__;
 }

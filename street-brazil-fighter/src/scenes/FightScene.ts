@@ -1,5 +1,5 @@
 import { Group, RectShape, Scene, Sprite, type SceneParams } from 'easy-game-maker';
-import { CHARACTERS } from '../data/characters';
+import { CHARACTERS, getCharacter, visualScaleOf } from '../data/characters';
 import { STAGES } from '../data/stages';
 import { EffectViews } from '../game/effectViews';
 import { FighterView, ProjectileViews } from '../game/fighterView';
@@ -11,7 +11,7 @@ import { ctxOf, goto, hook, type GameContext } from '../game/context';
 import { COLORS, GROUND_SCREEN_Y, H, STAGE_WORLD_H, STAGE_WORLD_W, W } from '../game/layout';
 import { Label, rect } from '../game/ui';
 import { activeHitbox, hurtboxes, projectileBox } from '../sim/geometry';
-import { createRng, nextInt, type MatchState, type SimEvent, type WorldBox } from '../sim';
+import { METER_MAX, createRng, nextInt, type MatchState, type SimEvent, type WorldBox } from '../sim';
 
 const RESULT_DELAY_FRAMES = 200;
 
@@ -77,6 +77,11 @@ export class FightScene extends Scene {
       difficulty: session.difficulty, seed: query.seed ^ (Date.now() & 0xffff),
     });
 
+    if (query.meter) {
+      const m = this.runner.match;
+      this.runner.match = { ...m, fighters: [{ ...m.fighters[0], meter: METER_MAX }, { ...m.fighters[1], meter: METER_MAX }] };
+    }
+
     const stageTex = await assets.stageImage(session.stageId);
     const stage = new Sprite({ texture: stageTex, x: 0, y: H - STAGE_WORLD_H, width: STAGE_WORLD_W, height: STAGE_WORLD_H });
     stage.anchorX = 0;
@@ -84,8 +89,8 @@ export class FightScene extends Scene {
     this.world.add(stage);
     const same = session.p1 === session.p2;
     this.views = [
-      new FighterView(assets.fighter(session.p1), false),
-      new FighterView(assets.fighter(session.p2), same),
+      new FighterView(assets.fighter(session.p1), false, visualScaleOf(getCharacter(session.p1))),
+      new FighterView(assets.fighter(session.p2), same, visualScaleOf(getCharacter(session.p2))),
     ];
     this.views.forEach((v, i) => {
       v.zIndex = 10 + i;
@@ -220,7 +225,8 @@ export class FightScene extends Scene {
       return;
     }
     const controls = this.ctx.controls;
-    const events = this.runner.advance(dt, this.ctx.query.speed, (side) => controls.held(side));
+    // the speed lives in the hook so a test can slow the game down to film an animation
+    const events = this.runner.advance(dt, hook().speed, (side) => controls.held(side));
     controls.endFrame();
     this.playSounds(events);
     this.render(this.runner.match);
@@ -228,7 +234,7 @@ export class FightScene extends Scene {
   }
 
   private playSounds(events: readonly SimEvent[]): void {
-    if (this.ctx.query.speed > 1) return;
+    if (hook().speed > 1) return;
     const { assets } = this.ctx;
     for (const e of events) {
       if (e.type === 'attackStart') assets.play(SFX_BY_MOVE[e.moveId] ?? 'punch', 0.7);
@@ -255,6 +261,8 @@ export class FightScene extends Scene {
     const h = hook();
     h.match = m;
     h.frame = m.frame;
+    h.camX = r.camX;
+    h.shown = [this.views[0].shown, this.views[1].shown];
   }
 
   private drawDebug(m: MatchState): void {

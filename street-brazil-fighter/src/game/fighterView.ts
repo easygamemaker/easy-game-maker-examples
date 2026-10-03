@@ -1,6 +1,7 @@
 import { CircleShape, Group, Sprite } from 'easy-game-maker';
 import type { FighterState, Projectile } from '../sim';
 import type { FighterFrame, FighterFrames } from './assets';
+import { clipFrameName } from './animation';
 import { drawParams, type FighterVisual } from './fx';
 import { GROUND_SCREEN_Y, SPRITE_SCALE } from './layout';
 
@@ -8,8 +9,10 @@ import { GROUND_SCREEN_Y, SPRITE_SCALE } from './layout';
 export class FighterView extends Group {
   private readonly shadow: CircleShape;
   private readonly sprite = new Sprite();
+  /** Name of the atlas frame drawn last. */
+  shown = '';
 
-  constructor(private readonly frames: FighterFrames, private readonly mirrorTint: boolean) {
+  constructor(private readonly frames: FighterFrames, private readonly mirrorTint: boolean, private readonly scale = 1) {
     super();
     this.shadow = new CircleShape({ radius: 60, fill: '#000000' });
     this.shadow.alpha = 0.33;
@@ -20,13 +23,16 @@ export class FighterView extends Group {
   }
 
   update(f: FighterState, visual: FighterVisual, frame: number): void {
-    const pose: FighterFrame | undefined = this.frames.get(f.pose) ?? this.frames.get('idle');
+    const clip = clipFrameName(f);
+    const clipPose = clip === null ? undefined : this.frames.get(clip);
+    const pose: FighterFrame | undefined = clipPose ?? this.frames.get(f.pose) ?? this.frames.get('idle');
     if (!pose) return;
-    const p = drawParams(visual, f, frame);
+    this.shown = clipPose !== undefined ? (clip as string) : this.frames.has(f.pose) ? f.pose : 'idle';
+    const p = drawParams(visual, f, frame, clipPose !== undefined);
     const sp = this.sprite;
     sp.texture = pose.texture;
-    sp.width = pose.w * SPRITE_SCALE;
-    sp.height = pose.h * SPRITE_SCALE;
+    sp.width = pose.w * SPRITE_SCALE * this.scale;
+    sp.height = pose.h * SPRITE_SCALE * this.scale;
     sp.anchorX = pose.anchorX / pose.w;
     sp.anchorY = pose.anchorY / pose.h;
     sp.x = f.x;

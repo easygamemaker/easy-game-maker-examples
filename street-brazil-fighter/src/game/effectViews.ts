@@ -16,7 +16,28 @@ const make: Record<EffectKind, () => DisplayObject> = {
   dust: () => new CircleShape({ radius: 22, fill: '#d9cdb4' }),
   clash: () => new PolygonShape({ points: star(12, 60, 24), fill: '#ffffff', stroke: '#59a5ff', strokeWidth: 4 }),
   ko: () => new CircleShape({ radius: 120, fill: '#ffffff' }),
+  footprint,
 };
+
+/** A glowing footprint: sole, heel and four toes, toes pointing to +x (flipped by the effect's direction). */
+function footprint(): Group {
+  const g = new Group();
+  const glow = new CircleShape({ radius: 22, fill: '#9dff7a' });
+  glow.scaleX = 1.7;
+  glow.scaleY = 0.55;
+  glow.alpha = 0.28;
+  const sole = new CircleShape({ radius: 14, fill: '#d7ff6a', stroke: '#ff9a1f', strokeWidth: 3 });
+  sole.scaleX = 1.2;
+  sole.scaleY = 0.5;
+  g.add(glow, sole);
+  [-9, -3, 3, 9].forEach((dy, i) => {
+    const toe = new CircleShape({ radius: 4.2 - Math.abs(i - 1.5) * 0.5, fill: '#d7ff6a', stroke: '#ff9a1f', strokeWidth: 2 });
+    toe.x = 24;
+    toe.y = dy * 0.5;
+    g.add(toe);
+  });
+  return g;
+}
 
 const KINDS = Object.keys(make) as EffectKind[];
 
@@ -46,7 +67,13 @@ export class EffectViews extends Group {
       o.visible = true;
       o.x = e.x;
       o.y = GROUND_SCREEN_Y - e.y;
-      if (e.kind === 'dust') {
+      if (e.kind === 'footprint') {
+        o.y = GROUND_SCREEN_Y - e.y;
+        o.scaleX = e.dir ?? 1;
+        o.scaleY = 1;
+        o.rotation = 0;
+        o.alpha = 0.95 * (1 - t) * (1 - t * 0.3);
+      } else if (e.kind === 'dust') {
         o.scaleX = 0.6 + t * 2.2;
         o.scaleY = (0.6 + t * 1.2) * 0.6;
         o.alpha = 0.55 * (1 - t);

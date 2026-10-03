@@ -3,7 +3,8 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { CHARACTERS, MOVE_KEYS, POSE_IDS } from '../../data/characters';
 import { STAGES } from '../../data/stages';
-import { SOUND_NAMES } from '../../game/assets';
+import { ATTACK_CLIP_PREFIX, IDLE_CLIP, WALK_CLIP } from '../../game/animation';
+import { ANIMATED_FIGHTERS, SOUND_NAMES } from '../../game/assets';
 import { parseAtlas } from '../../game/atlas';
 
 const PUBLIC = join(__dirname, '..', '..', '..', 'public', 'assets');
@@ -68,6 +69,39 @@ describe('fighter atlases', () => {
           expect(f.anchorX, name).toBeLessThanOrEqual(f.w);
           expect(f.anchorY, name).toBeGreaterThan(0);
           expect(f.anchorY, name).toBeLessThanOrEqual(f.h + 1);
+        }
+      });
+    });
+  }
+});
+
+describe('animation atlases', () => {
+  const needed = [...new Set([...IDLE_CLIP.frames, ...WALK_CLIP.frames, ...Object.values(ATTACK_CLIP_PREFIX).flatMap((p) => [0, 1, 2].map((i) => `${p}_${i}`))])];
+
+  it('lists only known fighters', () => {
+    for (const id of ANIMATED_FIGHTERS) expect(CHARACTERS.some((c) => c.id === id), id).toBe(true);
+  });
+
+  for (const id of ANIMATED_FIGHTERS) {
+    describe(id, () => {
+      const jsonPath = join(PUBLIC, 'fighters', `${id}-anim.json`);
+      const pngPath = join(PUBLIC, 'fighters', `${id}-anim.png`);
+
+      it('json matches the png and has every clip frame', () => {
+        const atlas = parseAtlas(JSON.parse(readFileSync(jsonPath, 'utf8')));
+        expect(pngSize(pngPath)).toEqual({ w: atlas.size.w, h: atlas.size.h });
+        for (const name of needed) expect(atlas.frames[name], `${id}:${name}`).toBeDefined();
+      });
+
+      it('walk and idle frames are about as tall as the key-pose idle and stand on their anchor', () => {
+        const anim = parseAtlas(JSON.parse(readFileSync(jsonPath, 'utf8')));
+        const key = parseAtlas(JSON.parse(readFileSync(join(PUBLIC, 'fighters', `${id}.json`), 'utf8')));
+        const idleH = (key.frames['idle'] as { h: number }).h;
+        for (const name of [...IDLE_CLIP.frames, ...WALK_CLIP.frames]) {
+          const f = anim.frames[name] as { h: number; anchorY: number };
+          expect(f.h / idleH, name).toBeGreaterThan(0.85);
+          expect(f.h / idleH, name).toBeLessThan(1.2);
+          expect(Math.abs(f.anchorY - f.h), name).toBeLessThanOrEqual(14);
         }
       });
     });

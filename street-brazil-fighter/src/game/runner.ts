@@ -5,7 +5,7 @@ import {
 import { NO_INPUT } from './controls';
 import { cameraTarget, followCamera } from './camera';
 import {
-  INITIAL_VISUAL, decayShake, shakeAmount, spawnEffects, stepEffects, stepVisual,
+  INITIAL_VISUAL, decayShake, shakeAmount, spawnEffects, spawnFootprints, stepEffects, stepVisual,
   type Effect, type FighterVisual,
 } from './fx';
 
@@ -65,7 +65,7 @@ export class FightRunner {
     const { state, events } = stepMatch(this.match, inputs);
     this.match = state;
     this.visuals = [stepVisual(this.visuals[0], 0, events), stepVisual(this.visuals[1], 1, events)];
-    this.effects = [...stepEffects(this.effects), ...spawnEffects(events)];
+    this.effects = [...stepEffects(this.effects), ...spawnEffects(events), ...spawnFootprints(state.fighters)];
     this.shake = Math.max(decayShake(this.shake), shakeAmount(events));
     this.camX = followCamera(this.camX, state.fighters[0].x, state.fighters[1].x);
     return events;
