@@ -12,6 +12,8 @@ const BAR_Y = 30;
 const BAR_X: readonly [number, number] = [60, W - 60 - BAR_W];
 const METER_W = 300;
 const METER_Y = 98;
+const SCRIM_H = 150;
+const SCRIM_STEPS = 15;
 
 export const healthColor = (fraction: number): string => (fraction > 0.5 ? '#2ee66b' : fraction > 0.25 ? '#ffd23f' : '#ff4d4d');
 
@@ -51,7 +53,11 @@ export class Hud extends Group {
   constructor(p1: string, p2: string, private readonly mode: Mode) {
     super();
     this.zIndex = 100;
-    this.add(rect(0, 0, W, 130, '#000000', 0.28));
+    // soft scrim: stacked strips fade to nothing, so no hard edge cuts across the stage art
+    for (let i = 0; i < SCRIM_STEPS; i++) {
+      const k = 1 - i / SCRIM_STEPS;
+      this.add(rect(0, (i * SCRIM_H) / SCRIM_STEPS, W, SCRIM_H / SCRIM_STEPS, '#000000', 0.3 * k * k));
+    }
     const make = (side: Side): SideWidgets => {
       const x = BAR_X[side];
       this.add(rect(x - 4, BAR_Y - 4, BAR_W + 8, BAR_H + 8, '#0b0f1c', 0.9));

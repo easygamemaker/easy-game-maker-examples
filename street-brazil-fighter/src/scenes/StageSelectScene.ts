@@ -6,9 +6,11 @@ import { COLORS, H, W } from '../game/layout';
 import { FONT_TITLE, Label, moveGrid, rect } from '../game/ui';
 
 const COLS = 3;
-const CARD_W = 330;
-const CARD_H = 178;
-const GAP = 18;
+const CARD_W = 286;
+const CARD_H = 154;
+const GAP = 16;
+const GRID_TOP = 90;
+const LABEL_BAR_Y = 628;
 
 export class StageSelectScene extends Scene {
   private ctx!: GameContext;
@@ -35,7 +37,9 @@ export class StageSelectScene extends Scene {
     this.cursor.anchorX = 0;
     this.cursor.anchorY = 0;
     this.add(this.cursor);
-    this.stageLabel = new Label('', W / 2, H - 30, { size: 32, font: FONT_TITLE });
+    this.add(rect(0, LABEL_BAR_Y, W, H - LABEL_BAR_Y, '#06080f', 0.82));
+    this.add(rect(0, LABEL_BAR_Y, W, 3, COLORS.gold, 0.9));
+    this.stageLabel = new Label('', W / 2, LABEL_BAR_Y + (H - LABEL_BAR_Y) / 2 + 2, { size: 32, font: FONT_TITLE });
     this.add(this.stageLabel);
     this.refresh();
   }
@@ -47,7 +51,7 @@ export class StageSelectScene extends Scene {
 
   private pos(i: number): { x: number; y: number } {
     const x0 = (W - (COLS * CARD_W + (COLS - 1) * GAP)) / 2;
-    return { x: x0 + (i % COLS) * (CARD_W + GAP), y: 98 + Math.floor(i / COLS) * (CARD_H + GAP) };
+    return { x: x0 + (i % COLS) * (CARD_W + GAP), y: GRID_TOP + Math.floor(i / COLS) * (CARD_H + GAP) };
   }
 
   private refresh(): void {
