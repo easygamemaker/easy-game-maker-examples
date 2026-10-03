@@ -74,7 +74,7 @@ const full = async (page, name) => png(name, await page.screenshot({ type: 'png'
  * Samples n screenshots, one every `every` sim frames, cropped around the fighters, while `action` runs, and
  * composes them into one labelled contact sheet. Returns the infos of the frames (state, shown frame name...).
  */
-async function filmstrip(page, name, { focus = 0, n = 10, every = 3, width = 520, top = 170, height = 450, action, cols = 6, scale = 0.62 }) {
+async function filmstrip(page, name, { moment = null, focus = 0, n = 10, every = 3, width = 520, top = 170, height = 450, action, cols = 6, scale = 0.62 }) {
   const task = action ? action() : Promise.resolve();
   const tiles = [];
   let last = -1e9;
@@ -88,6 +88,9 @@ async function filmstrip(page, name, { focus = 0, n = 10, every = 3, width = 520
     tiles.push({ buf, info });
   }
   await task;
+  // the full resolution crop of the first tile that shows the named animation frame (the hit or special moment)
+  const hit = moment && tiles.find((t) => t.info.shown[0] === moment);
+  if (hit) await png(name.replace('strip-', 'moment-'), hit.buf);
   const tw = Math.round(width * scale), th = Math.round(height * scale);
   const rows = Math.ceil(tiles.length / cols);
   const comps = [];
@@ -187,9 +190,9 @@ async function fighterSuite(id, i) {
     await waitFrames(page, 4);
   }
   await page.keyboard.up('KeyD');
-  await strip('hit', { focus: 'mid', width: 640, n: 12, action: () => tap(page, 'KeyJ', 2) });
+  await strip('hit', { moment: 'punch_1', focus: 'mid', width: 640, n: 12, action: () => tap(page, 'KeyJ', 2) });
   await waitFrames(page, 60);
-  await strip('special', { focus: 'mid', width: 760, n: 16, action: () => tap(page, 'KeyL', 2) });
+  await strip('special', { moment: 'special_1', focus: 'mid', width: 760, n: 16, action: () => tap(page, 'KeyL', 2) });
   const hs = await hook(page);
   note(`  after the special: P2 hp ${hs.hp[1]} (state ${hs.state[1]}), P1 meter ${hs.meter[0]}`);
   await ctx.close();

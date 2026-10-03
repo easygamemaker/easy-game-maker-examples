@@ -3,7 +3,14 @@ import type { FighterState, Projectile } from '../sim';
 import type { FighterFrame, FighterFrames } from './assets';
 import { clipFrameName } from './animation';
 import { drawParams, type FighterVisual } from './fx';
-import { GROUND_SCREEN_Y, SPRITE_SCALE } from './layout';
+import { GROUND_SCREEN_Y, SPRITE_SCALE, W } from './layout';
+
+/** Keeps a drawn sprite inside the visible screen (screen x of its left and right edge), by shifting it. */
+export function keepOnScreen(left: number, right: number, margin = 6): number {
+  if (left < margin) return margin - left;
+  if (right > W - margin) return W - margin - right;
+  return 0;
+}
 
 /** Draws one fighter: a ground shadow and the sprite of the sim's current pose, in world coordinates. */
 export class FighterView extends Group {
@@ -22,7 +29,7 @@ export class FighterView extends Group {
     this.add(this.shadow, this.sprite);
   }
 
-  update(f: FighterState, visual: FighterVisual, frame: number): void {
+  update(f: FighterState, visual: FighterVisual, frame: number, camX = 0): void {
     const clip = clipFrameName(f);
     const clipPose = clip === null ? undefined : this.frames.get(clip);
     const pose: FighterFrame | undefined = clipPose ?? this.frames.get(f.pose) ?? this.frames.get('idle');
@@ -35,7 +42,10 @@ export class FighterView extends Group {
     sp.height = pose.h * SPRITE_SCALE * this.scale;
     sp.anchorX = pose.anchorX / pose.w;
     sp.anchorY = pose.anchorY / pose.h;
-    sp.x = f.x;
+    // a knocked down fighter at the wall would lie half outside the screen: nudge the drawing back in view
+    const k = sp.width * p.scaleX;
+    const left = f.x - camX - (f.facing === 1 ? pose.anchorX : pose.w - pose.anchorX) * (sp.width / pose.w) * p.scaleX;
+    sp.x = f.x + keepOnScreen(left, left + k);
     sp.y = GROUND_SCREEN_Y - f.y + p.offsetY;
     sp.scaleX = f.facing * p.scaleX;
     sp.scaleY = p.scaleY;

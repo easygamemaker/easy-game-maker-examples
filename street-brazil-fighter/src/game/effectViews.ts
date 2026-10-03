@@ -25,7 +25,7 @@ function footprint(): Group {
   const glow = new CircleShape({ radius: 22, fill: '#9dff7a' });
   glow.scaleX = 1.7;
   glow.scaleY = 0.55;
-  glow.alpha = 0.28;
+  glow.alpha = 0.4;
   const sole = new CircleShape({ radius: 14, fill: '#d7ff6a', stroke: '#ff9a1f', strokeWidth: 3 });
   sole.scaleX = 1.2;
   sole.scaleY = 0.5;
@@ -69,8 +69,8 @@ export class EffectViews extends Group {
       o.y = GROUND_SCREEN_Y - e.y;
       if (e.kind === 'footprint') {
         o.y = GROUND_SCREEN_Y - e.y;
-        o.scaleX = e.dir ?? 1;
-        o.scaleY = 1;
+        o.scaleX = (e.dir ?? 1) * 1.6;
+        o.scaleY = 1.6;
         o.rotation = 0;
         o.alpha = 0.95 * (1 - t) * (1 - t * 0.3);
       } else if (e.kind === 'dust') {

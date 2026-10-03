@@ -3,6 +3,7 @@ import { CHARACTERS, getCharacter, visualScaleOf, type MoveKey } from '../../dat
 import {
   ATTACK_CLIP_PREFIX, IDLE_CLIP, WALK_BACK_CLIP, WALK_CLIP, attackClip, clipFrameName, clipIndex,
 } from '../../game/animation';
+import { keepOnScreen } from '../../game/fighterView';
 import { spawnFootprints } from '../../game/fx';
 import { movePhaseOf, type FighterState } from '../../sim';
 import { input, neutralInput, patchFighters, placeFighters, runFrames, startFight } from '../../sim/testing';
@@ -140,5 +141,13 @@ describe('visual scale', () => {
       expect(visualScaleOf(c), c.id).toBeGreaterThanOrEqual(0.92);
       expect(visualScaleOf(c), c.id).toBeLessThanOrEqual(1.08);
     }
+  });
+});
+
+describe('keepOnScreen', () => {
+  it('shifts a sprite that sticks out of the screen back inside and leaves the others alone', () => {
+    expect(keepOnScreen(100, 300)).toBe(0);
+    expect(keepOnScreen(1100, 1400)).toBe(1300 - 6 - 1400);
+    expect(keepOnScreen(-80, 120)).toBe(6 + 80);
   });
 });

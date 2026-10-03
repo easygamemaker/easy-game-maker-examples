@@ -33,6 +33,12 @@
       "frames": {
         "walk_4": {
           "copyOf": "walk_0"
+        },
+        "idle_1": {
+          "copyOf": "idle_0"
+        },
+        "idle_2": {
+          "copyOf": "idle_0"
         }
       }
     },

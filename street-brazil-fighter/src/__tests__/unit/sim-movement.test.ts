@@ -126,8 +126,8 @@ describe('pushboxes and separation', () => {
     const a = { ...createFighter(0, 'craque'), x: 500 };
     const b = { ...createFighter(1, 'craque'), x: 530 };
     const [ra, rb] = resolvePushboxes([a, b]);
-    expect(ra.x).toBe(480);
-    expect(rb.x).toBe(550);
+    expect(ra.x).toBe(515 - PUSHBOX_WIDTH / 2);
+    expect(rb.x).toBe(515 + PUSHBOX_WIDTH / 2);
     const [wa, wb] = resolvePushboxes([{ ...a, x: MIN_X }, { ...b, x: MIN_X + 10 }]);
     expect(wa.x).toBe(MIN_X);
     expect(wb.x).toBe(MIN_X + PUSHBOX_WIDTH);

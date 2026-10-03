@@ -35,12 +35,12 @@ export interface DrawParams {
 /** Bob while idle or walking, squash and stretch, and a red-white flash right after being hit. */
 export function drawParams(v: FighterVisual, f: FighterState, frame: number, animated = false): DrawParams {
   let offsetY = 0;
-  // drawn clips carry their own bob, so the programmatic one only stays for key-pose fallbacks
-  if (animated) offsetY = 0;
+  // drawn clips carry their own bob: only a light one stays on idle (some fighters have a single idle frame)
+  if (animated) offsetY = f.state === 'idle' ? -Math.sin(frame * 0.11) * 1.5 : 0;
   else if (f.state === 'idle' || f.state === 'crouch') offsetY = -Math.sin(frame * 0.11) * 2.5;
   else if (f.state === 'walkForward' || f.state === 'walkBack') offsetY = -Math.abs(Math.sin(frame * 0.28)) * 6;
   const k = v.flash / FLASH_FRAMES;
-  const tint: [number, number, number, number] = k > 0 ? [1, 1 - 0.55 * k, 1 - 0.55 * k, 1] : [1, 1, 1, 1];
+  const tint: [number, number, number, number] = k > 0 ? [1, 1 - 0.38 * k, 1 - 0.38 * k, 1] : [1, 1, 1, 1];
   return { scaleX: v.squashX, scaleY: v.squashY, offsetY, tint };
 }
 
@@ -90,7 +90,7 @@ export function spawnFootprints(fighters: readonly FighterState[]): readonly Eff
     if (!BACKWARDS_FEET.has(f.characterId) || !walking || f.y > 0 || f.stateFrame % FOOTPRINT_EVERY !== 4) continue;
     const moveDir = f.state === 'walkForward' ? f.facing : (-f.facing as 1 | -1);
     const step = Math.floor(f.stateFrame / FOOTPRINT_EVERY) % 2;
-    out.push({ kind: 'footprint', x: f.x - moveDir * 6, y: -(step === 0 ? 4 : 14), age: 0, life: LIFE.footprint, dir: (-moveDir) as 1 | -1 });
+    out.push({ kind: 'footprint', x: f.x - moveDir * 14, y: -(step === 0 ? 8 : 24), age: 0, life: LIFE.footprint, dir: (-moveDir) as 1 | -1 });
   }
   return out;
 }

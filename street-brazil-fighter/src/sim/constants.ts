@@ -16,7 +16,7 @@ export const START_OFFSET = 200;
 export const P1_START_X = STAGE_WIDTH / 2 - START_OFFSET;
 export const P2_START_X = STAGE_WIDTH / 2 + START_OFFSET;
 
-export const PUSHBOX_WIDTH = 70;
+export const PUSHBOX_WIDTH = 100;
 export const PUSHBOX_HEIGHT = 270;
 
 /** Hurtbox used while lying down (knockdown on the ground, ko). */

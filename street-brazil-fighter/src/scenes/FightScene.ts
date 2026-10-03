@@ -248,8 +248,8 @@ export class FightScene extends Scene {
 
   private render(m: MatchState): void {
     const r = this.runner;
-    this.views[0].update(m.fighters[0], r.visuals[0], m.frame);
-    this.views[1].update(m.fighters[1], r.visuals[1], m.frame);
+    this.views[0].update(m.fighters[0], r.visuals[0], m.frame, r.camX);
+    this.views[1].update(m.fighters[1], r.visuals[1], m.frame, r.camX);
     this.projectiles.update(m.projectiles);
     this.effects.update(r.effects);
     this.hud.update(m);
