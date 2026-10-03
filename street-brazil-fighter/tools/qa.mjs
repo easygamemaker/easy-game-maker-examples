@@ -4,7 +4,7 @@ import sharp from 'sharp';
 import { existsSync, mkdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { ROOT } from './fal.mjs';
-import { CHARACTERS, STAGES, POSES_A, POSES_B } from './prompts.mjs';
+import { CHARACTERS, STAGES, POSES_A, POSES_B, POSES_C, POSES_D } from './prompts.mjs';
 import { RAW, parseArgs } from './common.mjs';
 import { floodBackground, findBlobs, matte } from './lib/matte.mjs';
 
@@ -12,12 +12,13 @@ const args = parseArgs();
 const QA = join(ROOT, 'art-src', 'qa');
 mkdirSync(QA, { recursive: true });
 const ALL = [...POSES_A, ...POSES_B];
+const ANIM = [...POSES_C, ...POSES_D];
 const STANDING = ['idle', 'walk', 'punch', 'kick', 'block', 'hit', 'punch_windup', 'kick_windup', 'victory', 'special_charge'];
 const rows = [];
 const check = (scope, name, ok, detail = '') => rows.push({ scope, name, ok, detail });
 
-async function checkRaw(ch, sheet) {
-  const file = join(RAW, `sprite-${ch.id}-${sheet}.png`);
+async function checkRaw(ch, sheet, name = `sprite-${ch.id}-${sheet}.png`) {
+  const file = join(RAW, name);
   const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const { width: w, height: h } = info;
   const rgba = matte(data, w, h, floodBackground(data, w, h));
@@ -71,7 +72,10 @@ async function checkAtlas(ch) {
   const kb = statSync(pngPath).size / 1024;
   check(scope, 'atlas size < 3 MB', kb < 3072, `${kb.toFixed(0)} KB`);
 
-  // contact sheet
+  await contactSheet(pngPath, atlas, join(QA, `${ch.id}.png`));
+}
+
+async function contactSheet(pngPath, atlas, outFile) {
   const CW = 340, CH = 470, COLS = 6;
   const comps = [];
   const pad = 12, ground = CH - 60;
@@ -84,21 +88,51 @@ async function checkAtlas(ch) {
     const left = Math.round(ox + CW / 2 - f.anchorX * scale);
     const top = Math.round(oy + ground - f.anchorY * scale);
     comps.push({ input: crop, left: Math.max(ox, left), top: Math.max(oy, top) });
-    const svg = `<svg width="${CW}" height="${CH}" xmlns="http://www.w3.org/2000/svg"><rect width="${CW}" height="${CH}" fill="none" stroke="#555"/><line x1="0" y1="${ground}" x2="${CW}" y2="${ground}" stroke="#ff3355" stroke-width="2"/><line x1="${CW / 2}" y1="${ground - 20}" x2="${CW / 2}" y2="${ground + 20}" stroke="#33ddff" stroke-width="2"/><text x="8" y="22" font-size="18" fill="#fff" font-family="Helvetica, Arial">${names[i]}</text></svg>`;
+    const body = ground - atlas.bodyHeight;
+    const svg = `<svg width="${CW}" height="${CH}" xmlns="http://www.w3.org/2000/svg"><rect width="${CW}" height="${CH}" fill="none" stroke="#555"/><line x1="0" y1="${ground}" x2="${CW}" y2="${ground}" stroke="#ff3355" stroke-width="2"/><line x1="0" y1="${body}" x2="${CW}" y2="${body}" stroke="#ffd23f" stroke-width="1" stroke-dasharray="6 6"/><line x1="${CW / 2}" y1="${ground - 20}" x2="${CW / 2}" y2="${ground + 20}" stroke="#33ddff" stroke-width="2"/><text x="8" y="22" font-size="18" fill="#fff" font-family="Helvetica, Arial">${names[i]}</text></svg>`;
     comps.push({ input: Buffer.from(svg), left: ox, top: oy });
   }
   const W = CW * COLS, H = CH * Math.ceil(names.length / COLS);
-  await sharp({ create: { width: W, height: H, channels: 4, background: '#3b3f4a' } }).composite(comps).png().toFile(join(QA, `${ch.id}.png`));
+  await sharp({ create: { width: W, height: H, channels: 4, background: '#3b3f4a' } }).composite(comps).png().toFile(outFile);
+}
+
+/** Animation atlas: names, scale against the key-pose idle, grounding and a contact sheet. */
+async function checkAnim(ch) {
+  const dir = join(ROOT, 'public', 'assets', 'fighters');
+  const pngPath = join(dir, `${ch.id}-anim.png`);
+  const scope = `${ch.id}/anim`;
+  const atlas = JSON.parse(readFileSync(join(dir, `${ch.id}-anim.json`), 'utf8'));
+  const key = JSON.parse(readFileSync(join(dir, `${ch.id}.json`), 'utf8'));
+  check(scope, '18 named animation frames', ANIM.every((p) => atlas.frames[p]), `${Object.keys(atlas.frames).length} frames`);
+  const { info } = await sharp(pngPath).raw().toBuffer({ resolveWithObject: true });
+  check(scope, 'json size matches png', info.width === atlas.size.w && info.height === atlas.size.h, `${info.width}x${info.height}`);
+  const idleH = key.frames.idle.h;
+  const STAND = ANIM.filter((p) => /^(walk|idle|punch|kick)/.test(p));
+  const off = STAND.filter((p) => { const r = atlas.frames[p].h / idleH; return r < 0.85 || r > 1.2; });
+  check(scope, 'height within 85-120% of key idle', off.length === 0, off.length ? `out of range: ${off.map((p) => `${p} ${(atlas.frames[p].h / idleH).toFixed(2)}`).join(', ')}` : 'ok');
+  const walkIdle = ANIM.filter((p) => /^(walk|idle)/.test(p));
+  const floaty = walkIdle.filter((p) => Math.abs(atlas.frames[p].anchorY - atlas.frames[p].h) > 14);
+  check(scope, 'walk and idle feet at frame bottom', floaty.length === 0, floaty.join(',') || 'ok');
+  const kb = statSync(pngPath).size / 1024;
+  check(scope, 'anim atlas size < 3 MB', kb < 3072, `${kb.toFixed(0)} KB`);
+  await contactSheet(pngPath, atlas, join(QA, `${ch.id}-anim.png`));
 }
 
 for (const ch of CHARACTERS) {
   if (args.only.length && !args.only.includes(ch.id)) continue;
-  const a = join(RAW, `sprite-${ch.id}-a.png`);
-  if (!existsSync(a) || !existsSync(join(RAW, `sprite-${ch.id}-b.png`))) { check(ch.id, 'raw sheets present', false, 'not generated'); continue; }
-  await checkRaw(ch, 'a');
-  await checkRaw(ch, 'b');
+  const hasRaw = (n) => existsSync(join(RAW, n));
+  if (hasRaw(`sprite-${ch.id}-a.png`) && hasRaw(`sprite-${ch.id}-b.png`)) {
+    await checkRaw(ch, 'a');
+    await checkRaw(ch, 'b');
+  }
+  if (hasRaw(`anim-${ch.id}-c.png`) && hasRaw(`anim-${ch.id}-d.png`)) {
+    await checkRaw(ch, 'c', `anim-${ch.id}-c.png`);
+    await checkRaw(ch, 'd', `anim-${ch.id}-d.png`);
+  }
   if (existsSync(join(ROOT, 'public', 'assets', 'fighters', `${ch.id}.json`))) await checkAtlas(ch);
   else check(ch.id, 'atlas processed', false, 'run process-sprites');
+  if (existsSync(join(ROOT, 'public', 'assets', 'fighters', `${ch.id}-anim.json`))) await checkAnim(ch);
+  else console.log(`(no animation atlas for ${ch.id} yet)`);
 }
 for (const s of STAGES) {
   if (args.only.length && !args.only.includes(s.id)) continue;

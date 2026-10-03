@@ -68,3 +68,36 @@ export const CHARACTERS = [
     special: 'a burst of spinning pink and blue feathers with sparkles',
   },
 ];
+
+// ---- round 2: edit jobs (character redesigns and animation sheets), all run through /edit ----
+
+/** Animation sheets copy the shipped art, so these two descriptions drop the leg and foot claims the art never delivered. */
+export const ANIM_DESC = {
+  dalva: 'Brazilian cangaceira warrior woman named Dalva: leather hat with a turned-up brim, brown leather vest, crossed bandolier of bullets, sandals, northeastern sertao outfit, cartoon fighting-game character, big expressive head, chunky heroic proportions; in EVERY frame her lower hand keeps holding the small machete exactly as in the reference (the machete never disappears, and she never raises that hand into a fist; in the three idle frames she stands exactly like the idle reference: machete held low in the lower hand pointing forward and down, the other fist raised, arms never crossed, machete never raised)',
+  saci: 'Brazilian folklore Saci Perere: a mischievous dark-skinned boy wearing a red cap, smoking a small pipe, with a bare chest and RED shorts in every frame, smooth clean vector cartoon fighting-game character (not pixel art), no ground shadow and no floor ellipse, big expressive head, chunky proportions, drawn exactly like the reference',
+  curupira: 'Brazilian folklore Curupira forest guardian: a strong stocky figure with flaming red hair that burns like fire, green and brown leaf and bark clothing, cartoon fighting-game character, big expressive head, heavy brawler build, drawn exactly like the reference',
+};
+
+export const POSES_C = ['walk_0', 'walk_1', 'walk_2', 'walk_3', 'walk_4', 'walk_5', 'idle_0', 'idle_1', 'idle_2'];
+export const POSES_D = ['punch_0', 'punch_1', 'punch_2', 'kick_0', 'kick_1', 'kick_2', 'special_0', 'special_1', 'special_2'];
+
+const EDIT_REF = 'Using the attached character sheet as the exact design reference (identical character, proportions, outfit, colors and palette). ';
+
+const LIST_C = 'these nine animation frames in this exact order, left to right then top to bottom: frames 1 to 6 are ONE smooth forward WALK CYCLE in a fighting-stance walk where in EVERY one of the six frames both fists stay raised in guard in front of the chest and face, exactly like the idle fighting stance, the arms never swing and never hang down, only the legs, hips and a slight body bob change: 1 contact (front foot touching the ground, back foot behind), 2 down (weight sinking, body at its lowest), 3 passing (rear leg swinging past the standing leg), 4 up (body at its highest, pushing off), 5 contact (the opposite foot forward), 6 passing (the opposite leg swinging past); frames 7 to 9 are three IDLE breathing frames in the fighting stance with a slight bob: 7 neutral, 8 slightly lowered with shoulders down, 9 slightly raised with the chest up; all frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row';
+const listD = (special) => `these nine animation frames in this exact order, left to right then top to bottom: frames 1 to 3 are a LIGHT PUNCH: 1 wind-up (fist pulled back), 2 extended hit frame (arm fully extended), 3 recovery (arm coming back); frames 4 to 6 are a HEAVY KICK: 4 chamber (knee raised and bent), 5 extended hit frame (leg fully extended), 6 recovery (leg coming back down); frames 7 to 9 are the SPECIAL MOVE (${special}): 7 charge, 8 release (the attack at its full extension), 9 follow-through; draw only the character's own body in the special move frames, never a detached projectile or energy effect; all frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row`;
+
+export const sheetPromptC = (desc) => EDIT_REF + SHEET_HEAD + desc + SHEET_MID + LIST_C + SHEET_TAIL;
+export const sheetPromptD = (desc, special) =>
+  EDIT_REF + 'The second attached image shows the special move poses. ' + SHEET_HEAD + desc + SHEET_MID + listD(special) + SHEET_TAIL;
+export const sheetPromptDOne = (desc, special) => EDIT_REF + SHEET_HEAD + desc + SHEET_MID + listD(special) + SHEET_TAIL;
+
+/** Saci redraw: the same nine key poses of sheet A, but with ONE leg only. */
+export const SACI_ONE_LEG =
+  'CRITICAL CHANGE TO EVERY FRAME: draw the character with exactly ONE LEG, like a one-legged pirate without a crutch. Count the legs: ONE. He has only a LEFT leg and one single bare foot. On the right side of his hips there is NO leg at all: his red shorts end at the hip and below the shorts on that side there is only empty white background, no stump, no peg leg, no crutch, no second foot. In the fighting poses he balances and hops on that single leg (this holds for ALL nine frames including 2 walk and 4 crouch: in the walk frame he takes a hop on his single leg, in the crouch he crouches on his single leg; in the kick pose the one leg is the kicking leg and he floats; in the knocked down pose one leg only). Keep his face, red cap, small pipe, bare chest, red shorts and palette identical. ';
+export const CURUPIRA_BACK_FEET =
+  'CRITICAL CHANGE TO EVERY FRAME: the character\'s FEET ARE REVERSED (Curupira of Brazilian folklore). Each foot is rotated 180 degrees: the HEEL is at the FRONT (toward the right, the direction he faces) and the TOES and toenails point BACKWARDS to the LEFT, so his footprints would point the wrong way. Like a person whose knees bend to the right while both feet point to the LEFT: the toes are on the left side of each leg, the heel on the right, in every standing frame (idle, walk, punch, kick, block, crouch). The foot shape must clearly extend backwards behind the heel, never forward. His body, face and fists still face RIGHT. Keep his flaming red hair, leaf and bark clothing and palette identical. ';
+
+export const redoPromptA = (change, desc) =>
+  EDIT_REF + change + SHEET_HEAD + desc + SHEET_MID + LIST_A + SHEET_TAIL;
+export const redoPromptB = (change, desc, special) =>
+  EDIT_REF + change + SHEET_HEAD + desc + SHEET_MID + LIST_B.replace('the special move projectile or energy effect', `the special move projectile or energy effect (${special})`) + SHEET_TAIL;

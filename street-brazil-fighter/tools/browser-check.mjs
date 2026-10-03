@@ -5,45 +5,21 @@
 // Playwright is not a dependency of this example. It is resolved from, in order: PLAYWRIGHT_DIR, the local
 // node_modules, EGM_SDK_DIR/node_modules (an easy-game-maker checkout) or ../../easy-game-maker/node_modules.
 // Usage: node tools/browser-check.mjs [--no-build] [--shots-only]
-import { createServer } from 'node:http';
-import { createReadStream, existsSync, mkdirSync, statSync } from 'node:fs';
-import { createRequire } from 'node:module';
+import { mkdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { extname, join, normalize, resolve } from 'node:path';
+import { join } from 'node:path';
 import sharp from 'sharp';
 import { ROOT } from './fal.mjs';
+import { LAUNCH_ARGS, loadPlaywright, serve } from './lib/browser.mjs';
 
 const args = new Set(process.argv.slice(2));
-const DIST = join(ROOT, 'dist');
 const SHOTS = join(ROOT, 'docs', 'screenshots');
-const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.webp': 'image/webp', '.wav': 'audio/wav', '.css': 'text/css' };
-
-function loadPlaywright() {
-  const dirs = [process.env.PLAYWRIGHT_DIR, join(ROOT, 'node_modules'), process.env.EGM_SDK_DIR && join(process.env.EGM_SDK_DIR, 'node_modules'), resolve(ROOT, '..', '..', 'easy-game-maker', 'node_modules'), resolve(ROOT, '..', 'easy-game-maker', 'node_modules')].filter(Boolean);
-  for (const d of dirs) {
-    if (existsSync(join(d, 'playwright'))) return createRequire(join(d, 'x.js'))('playwright');
-  }
-  throw new Error('playwright not found; set PLAYWRIGHT_DIR or EGM_SDK_DIR');
-}
 
 const results = [];
 const check = (name, ok, detail = '') => {
   results.push({ name, ok, detail });
   console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? '  ' + detail : ''}`);
 };
-
-function serve() {
-  const server = createServer((req, res) => {
-    const url = new URL(req.url ?? '/', 'http://x');
-    let p = normalize(decodeURIComponent(url.pathname)).replace(/^(\.\.[/\\])+/, '');
-    if (p === '/' || p === '\\') p = '/index.html';
-    const file = join(DIST, p);
-    if (!file.startsWith(DIST) || !existsSync(file) || !statSync(file).isFile()) { res.writeHead(404); res.end('not found'); return; }
-    res.writeHead(200, { 'content-type': MIME[extname(file)] ?? 'application/octet-stream' });
-    createReadStream(file).pipe(res);
-  });
-  return new Promise((ok) => server.listen(0, '127.0.0.1', () => ok({ server, port: server.address().port })));
-}
 
 async function shot(page, name) {
   mkdirSync(SHOTS, { recursive: true });
@@ -64,7 +40,7 @@ if (!args.has('--no-build')) execFileSync('npx', ['vite', 'build'], { cwd: ROOT,
 const { chromium } = loadPlaywright();
 const { server, port } = await serve();
 const base = `http://127.0.0.1:${port}/`;
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--autoplay-policy=no-user-gesture-required'] });
+const browser = await chromium.launch({ headless: true, args: LAUNCH_ARGS });
 const errors = [];
 const newPage = async (query = '') => {
   const ctx = await browser.newContext({ viewport: { width: 1300, height: 700 } });
