@@ -116,3 +116,29 @@ export function findBlobs(rgba, w, h, gap = 14, minArea = 60) {
   }
   return blobs;
 }
+
+/**
+ * Marks enclosed pure-white regions (gaps between an arm and the body that the border flood fill cannot reach)
+ * as background. Only regions of at least `minArea` pixels whose darkest channel is >= 250 are cleared.
+ * Opt-in per character, because white clothing has pure-white highlights too.
+ */
+export function fillEnclosedWhite(rgba, w, h, bg, minArea = 80) {
+  const seen = new Uint8Array(w * h);
+  const stack = new Int32Array(w * h);
+  const isWhite = (p) => !bg[p] && minCh(rgba, p * 4) >= 250;
+  for (let s = 0; s < w * h; s++) {
+    if (seen[s] || !isWhite(s)) continue;
+    const members = [];
+    let sp = 0;
+    stack[sp++] = s;
+    seen[s] = 1;
+    while (sp) {
+      const p = stack[--sp];
+      members.push(p);
+      const x = p % w;
+      const nb = [x > 0 ? p - 1 : -1, x < w - 1 ? p + 1 : -1, p >= w ? p - w : -1, p < w * (h - 1) ? p + w : -1];
+      for (const q of nb) if (q >= 0 && !seen[q] && isWhite(q)) { seen[q] = 1; stack[sp++] = q; }
+    }
+    if (members.length >= minArea) for (const p of members) bg[p] = 1;
+  }
+}

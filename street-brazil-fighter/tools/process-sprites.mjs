@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { ROOT } from './fal.mjs';
 import { CHARACTERS, POSES_A, POSES_B } from './prompts.mjs';
 import { RAW, parseArgs } from './common.mjs';
-import { floodBackground, matte, findBlobs } from './lib/matte.mjs';
+import { floodBackground, fillEnclosedWhite, matte, findBlobs } from './lib/matte.mjs';
 
 const args = parseArgs();
 const cfg = JSON.parse(readFileSync(join(ROOT, 'tools', 'characters.json'), 'utf8'));
@@ -16,10 +16,11 @@ const WORK = join(ROOT, 'art-src', 'work');
 mkdirSync(WORK, { recursive: true });
 
 /** Splits one sheet into 9 frames: {pose, rgba, w, h, anchorX, anchorY} in sheet pixels. */
-async function extractSheet(file, poses, gap, pad) {
+async function extractSheet(file, poses, gap, pad, holeFill) {
   const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const { width: w, height: h } = info;
   const bg = floodBackground(data, w, h);
+  if (holeFill) fillEnclosedWhite(data, w, h, bg);
   const rgba = matte(data, w, h, bg);
   const blobs = findBlobs(rgba, w, h, gap);
   const cw = w / 3, ch = h / 3;
@@ -65,8 +66,8 @@ for (const ch of CHARACTERS) {
   const a = join(RAW, `sprite-${ch.id}-a.png`), b = join(RAW, `sprite-${ch.id}-b.png`);
   if (!existsSync(a) || !existsSync(b)) { console.warn(`skip ${ch.id}: raw sheets missing`); continue; }
   const conf = { ...cfg.defaults, ...(cfg.characters[ch.id] ?? {}) };
-  const fa = await extractSheet(a, POSES_A, conf.blobMergeGap, conf.padding);
-  const fb = await extractSheet(b, POSES_B, conf.blobMergeGap, conf.padding);
+  const fa = await extractSheet(a, POSES_A, conf.blobMergeGap, conf.padding, conf.holeFill);
+  const fb = await extractSheet(b, POSES_B, conf.blobMergeGap, conf.padding, conf.holeFill);
   const all = [...fa, ...fb];
   const missing = all.filter((f) => f.missing).map((f) => f.pose);
   if (missing.length) throw new Error(`${ch.id}: frames not found: ${missing.join(', ')}`);

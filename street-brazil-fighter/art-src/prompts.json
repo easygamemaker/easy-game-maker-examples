@@ -2,6 +2,206 @@
   "note": "Prompts, models, params and request ids of every generated image. Raw outputs live in art-src/raw (gitignored).",
   "entries": [
     {
+      "id": "sprite-craque-a",
+      "kind": "sprite-sheet",
+      "character": "craque",
+      "sheet": "a",
+      "model": "fal-ai/nano-banana-pro",
+      "prompt": "Create a square 1:1 character sprite sheet on a plain flat white background showing nine frames of a single consistent Brazilian street soccer player named Craque da Varzea: wearing a plain yellow jersey and green shorts with NO logos or numbers, socks and cleats, a soccer ball at his feet, short hair, no ground line, no floor line and no shadow under the feet, cartoon fighting-game character, big expressive head, chunky heroic proportions arranged in a tidy 3x3 grid, in a clean flat 2D game-art style. Show the same character in these nine poses in this exact order, left to right then top to bottom: 1 idle fighting stance, 2 walk forward, 3 jump up, 4 crouch, 5 light punch (arm fully extended), 6 heavy kick (leg fully extended), 7 standing block (arms guarding), 8 getting hit (recoiling), 9 knocked down lying on the ground; all frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row, keeping the design, proportions, and palette identical across all frames. Every item sits in clean white negative space, fully separated, never overlapping, never touching, never bleeding off the canvas edge. Give each item a sharp, solid outer cut edge. No drop shadow, no halo, no glow, no soft fade or blur outside the cut line. Anti-aliasing inside each item is fine; outside the cut line it is not. Even frame sizing, high-resolution, ready to import.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 164658557
+      },
+      "referenceSheet": null,
+      "seed": 164658557,
+      "requestId": "01a102b1-254c-7ad2-860f-9ab1d6f16a3c",
+      "date": "2026-10-03",
+      "attempt": 1
+    },
+    {
+      "id": "sprite-craque-b",
+      "kind": "sprite-sheet",
+      "character": "craque",
+      "sheet": "b",
+      "model": "fal-ai/nano-banana-pro/edit",
+      "prompt": "Using the attached character sheet as the exact design reference (identical character, proportions, outfit and palette). Create a square 1:1 character sprite sheet on a plain flat white background showing nine frames of a single consistent Brazilian street soccer player named Craque da Varzea: wearing a plain yellow jersey and green shorts with NO logos or numbers, socks and cleats, a soccer ball at his feet, short hair, no ground line, no floor line and no shadow under the feet, cartoon fighting-game character, big expressive head, chunky heroic proportions arranged in a tidy 3x3 grid, in a clean flat 2D game-art style. Show the same character in these nine poses in this exact order, left to right then top to bottom: 1 punch wind-up (arm pulled back), 2 kick wind-up (leg raised and bent), 3 special move charge, 4 special move release (attack at its full extension), 5 crouch block, 6 crouch punch, 7 jump kick (in the air), 8 victory pose, 9 the special move projectile or energy effect (a flaming soccer ball fireball with an orange fire trail) shown alone without the character; all character frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row, keeping the design, proportions, and palette identical across all frames. Every item sits in clean white negative space, fully separated, never overlapping, never touching, never bleeding off the canvas edge. Give each item a sharp, solid outer cut edge. No drop shadow, no halo, no glow, no soft fade or blur outside the cut line. Anti-aliasing inside each item is fine; outside the cut line it is not. Even frame sizing, high-resolution, ready to import.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 159167183
+      },
+      "referenceSheet": "sprite-craque-a",
+      "seed": 159167183,
+      "requestId": "01a102b1-dc14-76f1-b098-fbab50e4a52f",
+      "date": "2026-10-03",
+      "attempt": 1
+    },
+    {
+      "id": "sprite-curupira-a",
+      "kind": "sprite-sheet",
+      "character": "curupira",
+      "sheet": "a",
+      "model": "fal-ai/nano-banana-pro",
+      "prompt": "Create a square 1:1 character sprite sheet on a plain flat white background showing nine frames of a single consistent Brazilian folklore Curupira forest guardian: a strong stocky figure with flaming red hair that burns like fire, feet turned BACKWARDS (heels pointing forward), green and brown leaf and bark clothing, cartoon fighting-game character, big expressive head, heavy brawler build arranged in a tidy 3x3 grid, in a clean flat 2D game-art style. Show the same character in these nine poses in this exact order, left to right then top to bottom: 1 idle fighting stance, 2 walk forward, 3 jump up, 4 crouch, 5 light punch (arm fully extended), 6 heavy kick (leg fully extended), 7 standing block (arms guarding), 8 getting hit (recoiling), 9 knocked down lying on the ground; all frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row, keeping the design, proportions, and palette identical across all frames. Every item sits in clean white negative space, fully separated, never overlapping, never touching, never bleeding off the canvas edge. Give each item a sharp, solid outer cut edge. No drop shadow, no halo, no glow, no soft fade or blur outside the cut line. Anti-aliasing inside each item is fine; outside the cut line it is not. Even frame sizing, high-resolution, ready to import.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 208417886
+      },
+      "referenceSheet": null,
+      "seed": 208417886,
+      "requestId": "01a102a1-da64-70f3-8b60-9bb62b7e5609",
+      "date": "2026-10-03",
+      "attempt": 0
+    },
+    {
+      "id": "sprite-curupira-b",
+      "kind": "sprite-sheet",
+      "character": "curupira",
+      "sheet": "b",
+      "model": "fal-ai/nano-banana-pro/edit",
+      "prompt": "Using the attached character sheet as the exact design reference (identical character, proportions, outfit and palette). Create a square 1:1 character sprite sheet on a plain flat white background showing nine frames of a single consistent Brazilian folklore Curupira forest guardian: a strong stocky figure with flaming red hair that burns like fire, feet turned BACKWARDS (heels pointing forward), green and brown leaf and bark clothing, cartoon fighting-game character, big expressive head, heavy brawler build arranged in a tidy 3x3 grid, in a clean flat 2D game-art style. Show the same character in these nine poses in this exact order, left to right then top to bottom: 1 punch wind-up (arm pulled back), 2 kick wind-up (leg raised and bent), 3 special move charge, 4 special move release (attack at its full extension), 5 crouch block, 6 crouch punch, 7 jump kick (in the air), 8 victory pose, 9 the special move projectile or energy effect (a low ground shockwave of brown rock and green leaves) shown alone without the character; all character frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row, keeping the design, proportions, and palette identical across all frames. Every item sits in clean white negative space, fully separated, never overlapping, never touching, never bleeding off the canvas edge. Give each item a sharp, solid outer cut edge. No drop shadow, no halo, no glow, no soft fade or blur outside the cut line. Anti-aliasing inside each item is fine; outside the cut line it is not. Even frame sizing, high-resolution, ready to import.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 132171389
+      },
+      "referenceSheet": "sprite-curupira-a",
+      "seed": 132171389,
+      "requestId": "01a102a2-9611-7c33-b621-344004fb9ca0",
+      "date": "2026-10-03",
+      "attempt": 0
+    },
+    {
+      "id": "sprite-dalva-a",
+      "kind": "sprite-sheet",
+      "character": "dalva",
+      "sheet": "a",
+      "model": "fal-ai/nano-banana-pro",
+      "prompt": "Create a square 1:1 character sprite sheet on a plain flat white background showing nine frames of a single consistent Brazilian cangaceira warrior woman named Dalva: leather hat with a turned-up brim, brown leather vest, crossed bandolier of bullets, small machete in hand, sandals, northeastern sertao outfit, cartoon fighting-game character, big expressive head, chunky heroic proportions arranged in a tidy 3x3 grid, in a clean flat 2D game-art style. Show the same character in these nine poses in this exact order, left to right then top to bottom: 1 idle fighting stance, 2 walk forward, 3 jump up, 4 crouch, 5 light punch (arm fully extended), 6 heavy kick (leg fully extended), 7 standing block (arms guarding), 8 getting hit (recoiling), 9 knocked down lying on the ground; all frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row, keeping the design, proportions, and palette identical across all frames. Every item sits in clean white negative space, fully separated, never overlapping, never touching, never bleeding off the canvas edge. Give each item a sharp, solid outer cut edge. No drop shadow, no halo, no glow, no soft fade or blur outside the cut line. Anti-aliasing inside each item is fine; outside the cut line it is not. Even frame sizing, high-resolution, ready to import.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 195076192
+      },
+      "referenceSheet": null,
+      "seed": 195076192,
+      "requestId": "01a1029e-f436-7852-8b52-fdfa94528d48",
+      "date": "2026-10-03",
+      "attempt": 0
+    },
+    {
+      "id": "sprite-dalva-b",
+      "kind": "sprite-sheet",
+      "character": "dalva",
+      "sheet": "b",
+      "model": "fal-ai/nano-banana-pro/edit",
+      "prompt": "Using the attached character sheet as the exact design reference (identical character, proportions, outfit and palette). Create a square 1:1 character sprite sheet on a plain flat white background showing nine frames of a single consistent Brazilian cangaceira warrior woman named Dalva: leather hat with a turned-up brim, brown leather vest, crossed bandolier of bullets, small machete in hand, sandals, northeastern sertao outfit, cartoon fighting-game character, big expressive head, chunky heroic proportions arranged in a tidy 3x3 grid, in a clean flat 2D game-art style. Show the same character in these nine poses in this exact order, left to right then top to bottom: 1 punch wind-up (arm pulled back), 2 kick wind-up (leg raised and bent), 3 special move charge, 4 special move release (attack at its full extension), 5 crouch block, 6 crouch punch, 7 jump kick (in the air), 8 victory pose, 9 the special move projectile or energy effect (a curved crescent slash wave of white and orange energy) shown alone without the character; all character frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row, keeping the design, proportions, and palette identical across all frames. Every item sits in clean white negative space, fully separated, never overlapping, never touching, never bleeding off the canvas edge. Give each item a sharp, solid outer cut edge. No drop shadow, no halo, no glow, no soft fade or blur outside the cut line. Anti-aliasing inside each item is fine; outside the cut line it is not. Even frame sizing, high-resolution, ready to import.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 186363383
+      },
+      "referenceSheet": "sprite-dalva-a",
+      "seed": 186363383,
+      "requestId": "01a102a0-2b7c-72a1-9a68-52867841c54a",
+      "date": "2026-10-03",
+      "attempt": 0
+    },
+    {
+      "id": "sprite-rosa-a",
+      "kind": "sprite-sheet",
+      "character": "rosa",
+      "sheet": "a",
+      "model": "fal-ai/nano-banana-pro",
+      "prompt": "Create a square 1:1 character sprite sheet on a plain flat white background showing nine frames of a single consistent Brazilian carnival samba dancer named Passista Rosa: a big feathered headdress in pink, blue and yellow, sparkling sequin bikini-style samba costume with a short skirt and feathers on the back, high heels, cartoon fighting-game character, big expressive head, chunky heroic proportions arranged in a tidy 3x3 grid, in a clean flat 2D game-art style. Show the same character in these nine poses in this exact order, left to right then top to bottom: 1 idle fighting stance, 2 walk forward, 3 jump up, 4 crouch, 5 light punch (arm fully extended), 6 heavy kick (leg fully extended), 7 standing block (arms guarding), 8 getting hit (recoiling), 9 knocked down lying on the ground; all frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row, keeping the design, proportions, and palette identical across all frames. Every item sits in clean white negative space, fully separated, never overlapping, never touching, never bleeding off the canvas edge. Give each item a sharp, solid outer cut edge. No drop shadow, no halo, no glow, no soft fade or blur outside the cut line. Anti-aliasing inside each item is fine; outside the cut line it is not. Even frame sizing, high-resolution, ready to import.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 128064482
+      },
+      "referenceSheet": null,
+      "seed": 128064482,
+      "requestId": "01a102a4-3b45-73f2-b154-215d5ccdcbb1",
+      "date": "2026-10-03",
+      "attempt": 0
+    },
+    {
+      "id": "sprite-rosa-b",
+      "kind": "sprite-sheet",
+      "character": "rosa",
+      "sheet": "b",
+      "model": "fal-ai/nano-banana-pro/edit",
+      "prompt": "Using the attached character sheet as the exact design reference (identical character, proportions, outfit and palette). Create a square 1:1 character sprite sheet on a plain flat white background showing nine frames of a single consistent Brazilian carnival samba dancer named Passista Rosa: a big feathered headdress in pink, blue and yellow, sparkling sequin bikini-style samba costume with a short skirt and feathers on the back, high heels, cartoon fighting-game character, big expressive head, chunky heroic proportions arranged in a tidy 3x3 grid, in a clean flat 2D game-art style. Show the same character in these nine poses in this exact order, left to right then top to bottom: 1 punch wind-up (arm pulled back), 2 kick wind-up (leg raised and bent), 3 special move charge, 4 special move release (attack at its full extension), 5 crouch block, 6 crouch punch, 7 jump kick (in the air), 8 victory pose, 9 the special move projectile or energy effect (a burst of spinning pink and blue feathers with sparkles) shown alone without the character; all character frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row, keeping the design, proportions, and palette identical across all frames. Every item sits in clean white negative space, fully separated, never overlapping, never touching, never bleeding off the canvas edge. Give each item a sharp, solid outer cut edge. No drop shadow, no halo, no glow, no soft fade or blur outside the cut line. Anti-aliasing inside each item is fine; outside the cut line it is not. Even frame sizing, high-resolution, ready to import.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 144547223
+      },
+      "referenceSheet": "sprite-rosa-a",
+      "seed": 144547223,
+      "requestId": "01a102a5-03c7-7501-84a7-23384a91dc26",
+      "date": "2026-10-03",
+      "attempt": 0
+    },
+    {
+      "id": "sprite-saci-a",
+      "kind": "sprite-sheet",
+      "character": "saci",
+      "sheet": "a",
+      "model": "fal-ai/nano-banana-pro",
+      "prompt": "Create a square 1:1 character sprite sheet on a plain flat white background showing nine frames of a single consistent Brazilian folklore Saci Perere: a mischievous dark-skinned boy with exactly ONE leg. Below his hips there is a single leg ending in a single bare foot, he hops on that one foot, and a second leg is never drawn anywhere (the other side of his hips is simply empty, like a one-legged pirate). He wears a red cap, smokes a small pipe, has a bare chest and RED shorts in every frame, smooth clean vector cartoon fighting-game character (not pixel art), no ground shadow and no floor ellipse, big expressive head, chunky proportions arranged in a tidy 3x3 grid, in a clean flat 2D game-art style. Show the same character in these nine poses in this exact order, left to right then top to bottom: 1 idle fighting stance, 2 walk forward, 3 jump up, 4 crouch, 5 light punch (arm fully extended), 6 heavy kick (leg fully extended), 7 standing block (arms guarding), 8 getting hit (recoiling), 9 knocked down lying on the ground; all frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row, keeping the design, proportions, and palette identical across all frames. Every item sits in clean white negative space, fully separated, never overlapping, never touching, never bleeding off the canvas edge. Give each item a sharp, solid outer cut edge. No drop shadow, no halo, no glow, no soft fade or blur outside the cut line. Anti-aliasing inside each item is fine; outside the cut line it is not. Even frame sizing, high-resolution, ready to import.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 110971865
+      },
+      "referenceSheet": null,
+      "seed": 110971865,
+      "requestId": "01a102aa-7dd7-7450-9b20-7e6ae7da72c5",
+      "date": "2026-10-03",
+      "attempt": 2
+    },
+    {
+      "id": "sprite-saci-b",
+      "kind": "sprite-sheet",
+      "character": "saci",
+      "sheet": "b",
+      "model": "fal-ai/nano-banana-pro/edit",
+      "prompt": "Using the attached character sheet as the exact design reference (identical character, proportions, outfit and palette). Create a square 1:1 character sprite sheet on a plain flat white background showing nine frames of a single consistent Brazilian folklore Saci Perere: a mischievous dark-skinned boy with exactly ONE leg. Below his hips there is a single leg ending in a single bare foot, he hops on that one foot, and a second leg is never drawn anywhere (the other side of his hips is simply empty, like a one-legged pirate). He wears a red cap, smokes a small pipe, has a bare chest and RED shorts in every frame, smooth clean vector cartoon fighting-game character (not pixel art), no ground shadow and no floor ellipse, big expressive head, chunky proportions arranged in a tidy 3x3 grid, in a clean flat 2D game-art style. Show the same character in these nine poses in this exact order, left to right then top to bottom: 1 punch wind-up (arm pulled back), 2 kick wind-up (leg raised and bent), 3 special move charge, 4 special move release (attack at its full extension), 5 crouch block, 6 crouch punch, 7 jump kick (in the air), 8 victory pose, 9 the special move projectile or energy effect (a small spinning red-and-gray whirlwind tornado) shown alone without the character; all character frames in strict side view facing RIGHT, full body visible, same scale, feet on the same imaginary ground line within each row, keeping the design, proportions, and palette identical across all frames. Every item sits in clean white negative space, fully separated, never overlapping, never touching, never bleeding off the canvas edge. Give each item a sharp, solid outer cut edge. No drop shadow, no halo, no glow, no soft fade or blur outside the cut line. Anti-aliasing inside each item is fine; outside the cut line it is not. Even frame sizing, high-resolution, ready to import.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 267694742
+      },
+      "referenceSheet": "sprite-saci-a",
+      "seed": 267694742,
+      "requestId": "01a102ab-3d8f-7003-9bbf-53aecd8f40cd",
+      "date": "2026-10-03",
+      "attempt": 2
+    },
+    {
       "id": "sprite-tiao-a",
       "kind": "sprite-sheet",
       "character": "tiao",

@@ -49,7 +49,7 @@ export const CHARACTERS = [
   },
   {
     id: 'saci', name: 'Saci',
-    desc: 'Brazilian folklore Saci Perere: a mischievous dark-skinned boy with only ONE leg, wearing a red cap, smoking a small pipe, bare chest, red shorts, cartoon fighting-game character, big expressive head, chunky proportions',
+    desc: 'Brazilian folklore Saci Perere: a mischievous dark-skinned boy with exactly ONE leg. Below his hips there is a single leg ending in a single bare foot, he hops on that one foot, and a second leg is never drawn anywhere (the other side of his hips is simply empty, like a one-legged pirate). He wears a red cap, smokes a small pipe, has a bare chest and RED shorts in every frame, smooth clean vector cartoon fighting-game character (not pixel art), no ground shadow and no floor ellipse, big expressive head, chunky proportions',
     special: 'a small spinning red-and-gray whirlwind tornado',
   },
   {
@@ -59,7 +59,7 @@ export const CHARACTERS = [
   },
   {
     id: 'craque', name: 'Craque da Varzea',
-    desc: 'Brazilian street soccer player named Craque da Varzea: wearing a plain yellow jersey and green shorts with NO logos or numbers, socks and cleats, a soccer ball at his feet, short hair, cartoon fighting-game character, big expressive head, chunky heroic proportions',
+    desc: 'Brazilian street soccer player named Craque da Varzea: wearing a plain yellow jersey and green shorts with NO logos or numbers, socks and cleats, a soccer ball at his feet, short hair, no ground line, no floor line and no shadow under the feet, cartoon fighting-game character, big expressive head, chunky heroic proportions',
     special: 'a flaming soccer ball fireball with an orange fire trail',
   },
   {

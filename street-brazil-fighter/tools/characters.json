@@ -1,12 +1,67 @@
 {
-  "_doc": "Per-character tuning for process-sprites.mjs. frames.<pose>: { dx, dy } shifts the computed anchor in sheet pixels (positive dx moves the anchor right, positive dy moves it down). blobMergeGap: dilation in px used to keep detached effects with their frame.",
-  "defaults": { "bodyHeight": 400, "padding": 6, "blobMergeGap": 14 },
+  "_doc": "Per-character tuning for process-sprites.mjs. frames.<pose>: { dx, dy } shifts the computed anchor in sheet pixels (positive dx moves the anchor right, positive dy moves it down). holeFill: also clear enclosed pure-white gaps (not for white clothing). blobMergeGap: dilation in px used to keep detached effects with their frame.",
+  "defaults": {
+    "bodyHeight": 400,
+    "padding": 6,
+    "blobMergeGap": 14
+  },
   "characters": {
-    "tiao": { "frames": {} },
-    "dalva": { "frames": {} },
-    "saci": { "frames": {} },
-    "curupira": { "frames": {} },
-    "craque": { "frames": {} },
-    "rosa": { "frames": {} }
+    "tiao": {
+      "frames": {}
+    },
+    "dalva": {
+      "holeFill": true,
+      "frames": {}
+    },
+    "saci": {
+      "holeFill": true,
+      "frames": {}
+    },
+    "curupira": {
+      "holeFill": true,
+      "frames": {}
+    },
+    "craque": {
+      "holeFill": false,
+      "frames": {
+        "idle": {
+          "dx": -34
+        },
+        "walk": {
+          "dx": -34
+        },
+        "crouch": {
+          "dx": -34
+        },
+        "punch": {
+          "dx": -34
+        },
+        "block": {
+          "dx": -34
+        },
+        "punch_windup": {
+          "dx": -34
+        },
+        "kick_windup": {
+          "dx": -34
+        },
+        "special_charge": {
+          "dx": -34
+        },
+        "crouch_block": {
+          "dx": -34
+        },
+        "crouch_punch": {
+          "dx": -34
+        },
+        "victory": {
+          "dx": -34
+        }
+      }
+    },
+    "rosa": {
+      "holeFill": true,
+      "frames": {}
+    }
   }
 }

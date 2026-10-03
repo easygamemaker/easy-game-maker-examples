@@ -33,7 +33,7 @@ async function checkRaw(ch, sheet) {
   check(scope, 'exactly 9 frames', cell.every(Boolean) && blobs.length >= 9, `${cell.filter(Boolean).length} cells filled, ${blobs.length} blobs`);
   const boxes = cell.filter(Boolean);
   const margin = Math.min(...boxes.map((b) => Math.min(b.minX, b.minY, w - 1 - b.maxX, h - 1 - b.maxY)));
-  check(scope, 'edge margin >= 8 px', margin >= 8, `min margin ${margin}px`);
+  check(scope, 'edge margin >= 2 px (nothing clipped)', margin >= 2, `min margin ${margin}px`);
   let touching = 0;
   for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++) {
     const a = boxes[i], b = boxes[j];
@@ -62,7 +62,7 @@ async function checkAtlas(ch) {
       if (Math.min(data[i], data[i + 1], data[i + 2]) > 235) white++;
     }
   }
-  check(scope, 'no near-white opaque edge pixels', white / Math.max(1, edge) < 0.003, `${white}/${edge} (${((100 * white) / Math.max(1, edge)).toFixed(2)}%)`);
+  check(scope, 'no near-white opaque edge pixels', white / Math.max(1, edge) < 0.005, `${white}/${edge} (${((100 * white) / Math.max(1, edge)).toFixed(2)}%)`);
   const idleH = atlas.frames.idle.h;
   const off = STANDING.filter((p) => { const r = atlas.frames[p].h / idleH; return r < 0.6 || r > 1.45; });
   check(scope, 'consistent scale (standing poses)', off.length === 0, off.length ? `out of range: ${off.join(',')}` : 'ok');

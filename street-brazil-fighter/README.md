@@ -117,6 +117,8 @@ The stage backgrounds and the fighter sprite sheets were generated with **Nano B
 
 `art-src/prompts.json` records every prompt, model id, parameters, seed, request id and date. Raw outputs are kept locally in `art-src/raw` (not committed).
 
+**Spend and budget.** 30 images were first generated and 4 were regenerated (Saci sheets A and B twice, Craque sheets A and B once), 34 images in total: 34 x 0.15 = 5.10 USD requested... see the ledger note below.
+
 ### Regenerating the art
 
 ```bash

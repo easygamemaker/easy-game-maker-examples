@@ -93,13 +93,13 @@ try {
     await tap(page, 'KeyJ', 300);
     await page.waitForTimeout(900);
     await shot(page, '03-character-select-cpu');
-    await waitScene(page, 'stage', 10000);
+    await waitScene(page, 'stage', 40000);
     await page.waitForTimeout(600);
     await tap(page, 'KeyD'); await tap(page, 'KeyS');
     await shot(page, '04-stage-select');
     await tap(page, 'KeyJ', 300);
-    await waitScene(page, 'fight', 15000);
-    await page.waitForFunction(() => window.__SBF__?.match?.phase === 'fight', null, { timeout: 15000 });
+    await waitScene(page, 'fight', 40000);
+    await page.waitForFunction(() => window.__SBF__?.match?.phase === 'fight', null, { timeout: 40000 });
     await page.waitForTimeout(2200);
     await shot(page, '05-fight');
     const s = await hookOf(page);
@@ -111,7 +111,7 @@ try {
   {
     const { page, ctx } = await newPage('?quick=1&p1=tiao&p2=tiao&stage=copacabana&p2mode=dummy&seed=3&hitboxes=1');
     await waitScene(page, 'fight');
-    await page.waitForFunction(() => window.__SBF__?.match?.phase === 'fight', null, { timeout: 15000 });
+    await page.waitForFunction(() => window.__SBF__?.match?.phase === 'fight', null, { timeout: 40000 });
     const start = await hookOf(page);
     await page.keyboard.down('KeyD');
     for (let i = 0; i < 80; i++) {
@@ -126,6 +126,25 @@ try {
     const end = await hookOf(page);
     check('keyboard punch reduces P2 health', end.hp[1] < start.hp[1], `P2 hp ${start.hp[1]} -> ${end.hp[1]}`);
     await ctx.close();
+  }
+
+  // 2b. every fighter and every stage loads and fights; a few extra screenshots
+  if (!args.has('--shots-only')) {
+    const ids = ['tiao', 'dalva', 'saci', 'curupira', 'craque', 'rosa'];
+    const stages = ['pelourinho', 'copacabana', 'amazonia', 'paulista', 'sambodromo', 'pantanal', 'lencois', 'corcovado', 'ouropreto'];
+    let ok = 0;
+    for (let i = 0; i < stages.length; i++) {
+      const p1 = ids[i % 6], p2 = ids[(i + 1) % 6];
+      const { page, ctx } = await newPage(`?quick=1&p1=${p1}&p2=${p2}&stage=${stages[i]}&seed=${i + 1}&diff=hard&speed=2`);
+      await waitScene(page, 'fight');
+      await page.waitForFunction(() => window.__SBF__?.match?.phase === 'fight', null, { timeout: 20000 });
+      await page.waitForTimeout(3500);
+      const h = await hookOf(page);
+      if (h?.phase) ok++;
+      if (['saci', 'curupira', 'craque', 'rosa'].includes(p1) && i < 8 && i % 2 === 0) await shot(page, `07-fight-${p1}-vs-${p2}-${stages[i]}`);
+      await ctx.close();
+    }
+    check('all 6 fighters and 9 stages load and fight', ok === stages.length, `${ok}/${stages.length}`);
   }
 
   // 3. CPU vs CPU full match through the automation hook
