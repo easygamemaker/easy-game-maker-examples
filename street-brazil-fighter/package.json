@@ -1,0 +1,33 @@
+{
+  "name": "street-brazil-fighter",
+  "version": "1.0.0",
+  "description": "A Brazilian-folklore 2D fighting game built with Easy Game Maker",
+  "type": "module",
+  "scripts": {
+    "dev": "egm simulate",
+    "build": "egm build desktop",
+    "build:desktop": "egm build desktop",
+    "build:web": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:browser": "node tools/browser-check.mjs",
+    "art:stages": "node tools/generate-stages.mjs",
+    "art:sprites": "node tools/generate-sprites.mjs",
+    "art:process": "node tools/process-stages.mjs && node tools/process-sprites.mjs",
+    "art:qa": "node tools/qa.mjs",
+    "sfx": "node tools/make-sfx.mjs"
+  },
+  "dependencies": {
+    "easy-game-maker": "^0.2.4"
+  },
+  "devDependencies": {
+    "@fal-ai/client": "1.10.1",
+    "@types/node": "^20.19.43",
+    "sharp": "^0.34.0",
+    "typescript": "^5.5.0",
+    "vite": "^5.3.0",
+    "vitest": "^2.1.9"
+  }
+}
