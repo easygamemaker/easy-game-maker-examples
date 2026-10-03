@@ -78,6 +78,24 @@
       "attempt": 0
     },
     {
+      "id": "stage-corcovado",
+      "kind": "stage",
+      "model": "fal-ai/nano-banana-pro",
+      "prompt": "Cartoon rendering of a battle stage, Fortnite concept art style, cartoon game graphics , Cartoon design style of a Christ the Redeemer overlook in Rio de Janeiro with Sugarloaf mountain and Guanabara Bay below. High contrast. Vibrant saturated stylized 3D-cartoon environment concept art with crisp painterly shapes, strong rim light and clouds, wide cinematic composition, camera at fighter eye level with a slight low angle, a clear open flat walkable ground strip across the lower third where two fighters will stand, the interesting landmarks framed on the left and right edges and in the background, NO characters, NO people in the foreground, NO text, NO logos, NO UI, NO watermark.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "16:9",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 220754789
+      },
+      "seed": 220754789,
+      "styleRef": null,
+      "requestId": "01a10283-17b8-7e02-96e4-418cd2d89382",
+      "date": "2026-10-03",
+      "attempt": 0
+    },
+    {
       "id": "stage-lencois",
       "kind": "stage",
       "model": "fal-ai/nano-banana-pro",
@@ -92,6 +110,24 @@
       "seed": 33904377,
       "styleRef": null,
       "requestId": "01a1022f-8806-76e0-b539-376a4f544d9b",
+      "date": "2026-10-03",
+      "attempt": 0
+    },
+    {
+      "id": "stage-ouropreto",
+      "kind": "stage",
+      "model": "fal-ai/nano-banana-pro",
+      "prompt": "Cartoon rendering of a battle stage, Fortnite concept art style, cartoon game graphics , Cartoon design style of a baroque hillside colonial town of Ouro Preto, Minas Gerais, with stone streets and white churches. High contrast. Vibrant saturated stylized 3D-cartoon environment concept art with crisp painterly shapes, strong rim light and clouds, wide cinematic composition, camera at fighter eye level with a slight low angle, a clear open flat walkable ground strip across the lower third where two fighters will stand, the interesting landmarks framed on the left and right edges and in the background, NO characters, NO people in the foreground, NO text, NO logos, NO UI, NO watermark.",
+      "params": {
+        "num_images": 1,
+        "aspect_ratio": "16:9",
+        "resolution": "2K",
+        "output_format": "png",
+        "seed": 68150318
+      },
+      "seed": 68150318,
+      "styleRef": null,
+      "requestId": "01a10283-9fb3-7bb3-888e-36c549b995da",
       "date": "2026-10-03",
       "attempt": 0
     },
