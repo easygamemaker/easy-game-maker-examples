@@ -1,0 +1,12 @@
+{
+  "_doc": "Per-character tuning for process-sprites.mjs. frames.<pose>: { dx, dy } shifts the computed anchor in sheet pixels (positive dx moves the anchor right, positive dy moves it down). blobMergeGap: dilation in px used to keep detached effects with their frame.",
+  "defaults": { "bodyHeight": 400, "padding": 6, "blobMergeGap": 14 },
+  "characters": {
+    "tiao": { "frames": {} },
+    "dalva": { "frames": {} },
+    "saci": { "frames": {} },
+    "curupira": { "frames": {} },
+    "craque": { "frames": {} },
+    "rosa": { "frames": {} }
+  }
+}
