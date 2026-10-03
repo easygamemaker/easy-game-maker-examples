@@ -155,3 +155,11 @@ export function copyTo(src, dest) {
 }
 
 export const sha256File = (p) => createHash('sha256').update(readFileSync(p)).digest('hex').slice(0, 16);
+
+// Tools fail with a one-line message instead of a stack trace (the message never contains credentials).
+const bail = (e) => {
+  console.error(`ERROR: ${e?.message ?? e}`);
+  process.exit(2);
+};
+process.on('unhandledRejection', bail);
+process.on('uncaughtException', bail);

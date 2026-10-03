@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Street Brazil Fighter</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #05070d; }
+    body { display: flex; align-items: center; justify-content: center; }
+    /* Scaling fit: keep the exact 13:7 ratio and fill as much of the window as possible. */
+    canvas { display: block; width: min(100vw, calc(100vh * 13 / 7)); height: min(100vh, calc(100vw * 7 / 13)); touch-action: none; }
+  </style>
+</head>
+<body>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
