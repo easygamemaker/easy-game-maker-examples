@@ -1,0 +1,99 @@
+{
+  "_doc": "Per-character tuning for process-sprites.mjs. frames.<pose>: { dx, dy } shifts the computed anchor in sheet pixels (positive dx moves the anchor right, positive dy moves it down). holeFill: also clear enclosed pure-white gaps (not for white clothing). blobMergeGap: dilation in px used to keep detached effects with their frame. frames.<pose>.scale multiplies the sheet scale of that one frame (a model that drew a frame smaller than the others). holeFillC/holeFillD: holeFill for the animation sheets only. scaleRefC/scaleRefD: frame whose content height is normalised to bodyHeight (default idle_0 and punch_2). frames.<pose>.copyOf: reuse another frame instead of the sheet's own (for a frame the model drew off-model).",
+  "defaults": {
+    "bodyHeight": 400,
+    "padding": 6,
+    "blobMergeGap": 14
+  },
+  "characters": {
+    "tiao": {
+      "frames": {
+        "special_1": {
+          "scale": 1.2
+        },
+        "walk_5": {
+          "copyOf": "walk_2"
+        }
+      },
+      "holeFillD": true
+    },
+    "dalva": {
+      "holeFill": true,
+      "frames": {
+        "idle_2": {
+          "copyOf": "idle_1"
+        },
+        "special_1": {
+          "scale": 1.35
+        }
+      }
+    },
+    "saci": {
+      "holeFill": true,
+      "frames": {
+        "walk_4": {
+          "copyOf": "walk_0"
+        },
+        "idle_1": {
+          "copyOf": "idle_0"
+        },
+        "idle_2": {
+          "copyOf": "idle_0"
+        }
+      }
+    },
+    "curupira": {
+      "holeFill": true,
+      "frames": {
+        "walk_5": {
+          "copyOf": "walk_2"
+        }
+      }
+    },
+    "craque": {
+      "holeFill": false,
+      "frames": {
+        "idle": {
+          "dx": -34
+        },
+        "walk": {
+          "dx": -34
+        },
+        "crouch": {
+          "dx": -34
+        },
+        "punch": {
+          "dx": -34
+        },
+        "block": {
+          "dx": -34
+        },
+        "punch_windup": {
+          "dx": -34
+        },
+        "kick_windup": {
+          "dx": -34
+        },
+        "special_charge": {
+          "dx": -34
+        },
+        "crouch_block": {
+          "dx": -34
+        },
+        "crouch_punch": {
+          "dx": -34
+        },
+        "victory": {
+          "dx": -34
+        },
+        "special_1": {
+          "scale": 1.4
+        }
+      }
+    },
+    "rosa": {
+      "holeFill": true,
+      "frames": {}
+    }
+  }
+}

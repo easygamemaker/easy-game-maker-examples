@@ -1,0 +1,154 @@
+{
+ "image": "craque.png",
+ "size": {
+  "w": 1891,
+  "h": 1727
+ },
+ "bodyHeight": 400,
+ "frames": {
+  "idle": {
+   "x": 0,
+   "y": 0,
+   "w": 277,
+   "h": 409,
+   "anchorX": 118,
+   "anchorY": 404
+  },
+  "walk": {
+   "x": 279,
+   "y": 0,
+   "w": 313,
+   "h": 407,
+   "anchorX": 158,
+   "anchorY": 403
+  },
+  "jump": {
+   "x": 594,
+   "y": 0,
+   "w": 270,
+   "h": 425,
+   "anchorX": 99,
+   "anchorY": 421
+  },
+  "crouch": {
+   "x": 866,
+   "y": 0,
+   "w": 280,
+   "h": 348,
+   "anchorX": 125,
+   "anchorY": 344
+  },
+  "punch": {
+   "x": 1148,
+   "y": 0,
+   "w": 355,
+   "h": 410,
+   "anchorX": 157,
+   "anchorY": 405
+  },
+  "kick": {
+   "x": 1505,
+   "y": 0,
+   "w": 386,
+   "h": 420,
+   "anchorX": 171,
+   "anchorY": 416
+  },
+  "block": {
+   "x": 0,
+   "y": 427,
+   "w": 280,
+   "h": 428,
+   "anchorX": 123,
+   "anchorY": 424
+  },
+  "hit": {
+   "x": 282,
+   "y": 427,
+   "w": 342,
+   "h": 437,
+   "anchorX": 267,
+   "anchorY": 433
+  },
+  "down": {
+   "x": 626,
+   "y": 427,
+   "w": 451,
+   "h": 164,
+   "anchorX": 237,
+   "anchorY": 160
+  },
+  "punch_windup": {
+   "x": 1079,
+   "y": 427,
+   "w": 356,
+   "h": 410,
+   "anchorX": 158,
+   "anchorY": 406
+  },
+  "kick_windup": {
+   "x": 1437,
+   "y": 427,
+   "w": 386,
+   "h": 421,
+   "anchorX": 137,
+   "anchorY": 416
+  },
+  "special_charge": {
+   "x": 0,
+   "y": 866,
+   "w": 298,
+   "h": 409,
+   "anchorX": 134,
+   "anchorY": 404
+  },
+  "special_release": {
+   "x": 300,
+   "y": 866,
+   "w": 401,
+   "h": 399,
+   "anchorX": 194,
+   "anchorY": 394
+  },
+  "crouch_block": {
+   "x": 703,
+   "y": 866,
+   "w": 341,
+   "h": 364,
+   "anchorX": 142,
+   "anchorY": 360
+  },
+  "crouch_punch": {
+   "x": 1046,
+   "y": 866,
+   "w": 366,
+   "h": 363,
+   "anchorX": 143,
+   "anchorY": 359
+  },
+  "jump_kick": {
+   "x": 1414,
+   "y": 866,
+   "w": 383,
+   "h": 422,
+   "anchorX": 118,
+   "anchorY": 417
+  },
+  "victory": {
+   "x": 0,
+   "y": 1290,
+   "w": 346,
+   "h": 437,
+   "anchorX": 180,
+   "anchorY": 432
+  },
+  "fx": {
+   "x": 348,
+   "y": 1290,
+   "w": 427,
+   "h": 199,
+   "anchorX": 299,
+   "anchorY": 194
+  }
+ }
+}

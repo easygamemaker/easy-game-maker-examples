@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.DS_Store
+*.local
+tools/.cache/
+art-src/raw/
+art-src/qa/
+art-src/reference/
+art-src/work/
+art-src/playtest/
