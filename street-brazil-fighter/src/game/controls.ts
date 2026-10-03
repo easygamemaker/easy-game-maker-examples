@@ -90,7 +90,21 @@ export class ControlHub {
   /** Scripted inputs used by the automation hook. Null means read the real devices. */
   override: [PlayerInput, PlayerInput] | null = null;
 
-  constructor(private readonly app: App) {}
+  /** Keys pressed since the last frame ended, so a tap shorter than one frame is not lost. */
+  private readonly latched = new Set<string>();
+
+  constructor(private readonly app: App) {
+    app.input.on('keydown', (e: unknown) => this.latched.add((e as { code: string }).code));
+  }
+
+  /** Call once per rendered frame after the sim steps ran. */
+  endFrame(): void {
+    this.latched.clear();
+  }
+
+  private isDown(code: string): boolean {
+    return this.app.input.isKeyDown(code) || this.latched.has(code);
+  }
 
   setTouch(input: PlayerInput): void {
     this.touch = input;
@@ -108,7 +122,7 @@ export class ControlHub {
   /** Held fight input of one player. P1 also gets the touch pad. */
   held(slot: 0 | 1): PlayerInput {
     if (this.override) return this.override[slot];
-    const kb = keyboardInput((c) => this.app.input.isKeyDown(c), KEY_MAPS[slot]);
+    const kb = keyboardInput((c) => this.isDown(c), KEY_MAPS[slot]);
     return mergeInputs(kb, this.pad(slot), slot === 0 ? this.touch : NO_INPUT);
   }
 

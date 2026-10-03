@@ -71,7 +71,7 @@ describe('fight runner', () => {
     expect(b.match.frame).toBe(60);
   });
   it('is deterministic with the same seed', () => {
-    const run = (): string => {
+    const run = (): number => {
       const r = new FightRunner({ ...base, controllers: ['cpu', 'cpu'] });
       for (let i = 0; i < 900; i++) r.step(() => NO_INPUT);
       return hashValue(r.match);

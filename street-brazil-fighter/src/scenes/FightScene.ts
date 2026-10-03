@@ -221,6 +221,7 @@ export class FightScene extends Scene {
     }
     const controls = this.ctx.controls;
     const events = this.runner.advance(dt, this.ctx.query.speed, (side) => controls.held(side));
+    controls.endFrame();
     this.playSounds(events);
     this.render(this.runner.match);
     this.afterMatchCheck(edges.confirm);
