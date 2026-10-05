@@ -47,6 +47,7 @@ export class StageSelectScene extends Scene {
   override onResume(): void {
     this.leaving = false;
     hook().scene = 'stage';
+    this.ctx.assets.audio.music('music_select');
   }
 
   private pos(i: number): { x: number; y: number } {

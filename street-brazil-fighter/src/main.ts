@@ -10,6 +10,18 @@ import { ControlHub } from './game/controls';
 import { GameAssets } from './game/assets';
 import { parseQuery } from './game/query';
 import { H, W } from './game/layout';
+import type { AudioDirector } from './audio/director';
+
+/** Feeds real time (not game speed) to the audio director: fades and queued announcer lines follow the wall clock. */
+function startAudioClock(audio: AudioDirector): void {
+  let last = performance.now();
+  const tick = (now: number): void => {
+    audio.update(Math.min(0.1, (now - last) / 1000));
+    last = now;
+    window.requestAnimationFrame(tick);
+  };
+  window.requestAnimationFrame(tick);
+}
 
 export default function createApp(canvas?: HTMLCanvasElement): App {
   const app = new App({ width: W, height: H, backgroundColor: '#10131f' });
@@ -24,6 +36,8 @@ export default function createApp(canvas?: HTMLCanvasElement): App {
     summary: null,
   };
   hook().speed = ctx.query.speed;
+  hook().audio = ctx.assets.audio.debug;
+  startAudioClock(ctx.assets.audio);
 
   app.scenes.add('boot', BootScene);
   app.scenes.add('title', TitleScene);

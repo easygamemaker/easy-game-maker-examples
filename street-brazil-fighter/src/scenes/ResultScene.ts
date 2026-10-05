@@ -53,6 +53,8 @@ export class ResultScene extends Scene {
   override onResume(): void {
     this.leaving = false;
     hook().scene = 'result';
+    const w = this.ctx.summary?.winner ?? null;
+    this.ctx.assets.audio.music(w === null ? null : this.ctx.session.mode === '1p' && w === 1 ? 'music_ko' : 'music_victory');
   }
 
   private readonly onPointer = (e: unknown): void => {

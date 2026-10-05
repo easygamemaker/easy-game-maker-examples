@@ -17,7 +17,10 @@
     "art:sprites": "node tools/generate-sprites.mjs",
     "art:process": "node tools/process-stages.mjs && node tools/process-sprites.mjs",
     "art:qa": "node tools/qa.mjs",
-    "sfx": "node tools/make-sfx.mjs"
+    "audio:generate": "node tools/generate-audio.mjs",
+    "audio:process": "node tools/process-audio.mjs",
+    "art:post": "node tools/post-atlas.mjs",
+    "art:consistency": "node tools/consistency.mjs"
   },
   "dependencies": {
     "easy-game-maker": "^0.2.4"
