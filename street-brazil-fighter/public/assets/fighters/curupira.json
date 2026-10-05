@@ -59,7 +59,7 @@
    "y": 0,
    "w": 225,
    "h": 414,
-   "anchorX": 100,
+   "anchorX": 140,
    "anchorY": 409
   },
   "hit": {
@@ -67,7 +67,7 @@
    "y": 416,
    "w": 346,
    "h": 384,
-   "anchorX": 161,
+   "anchorX": 211,
    "anchorY": 380
   },
   "down": {
@@ -75,7 +75,7 @@
    "y": 416,
    "w": 451,
    "h": 139,
-   "anchorX": 229,
+   "anchorX": 279,
    "anchorY": 135
   },
   "punch_windup": {
@@ -115,7 +115,7 @@
    "y": 825,
    "w": 295,
    "h": 365,
-   "anchorX": 124,
+   "anchorX": 164,
    "anchorY": 361
   },
   "crouch_punch": {

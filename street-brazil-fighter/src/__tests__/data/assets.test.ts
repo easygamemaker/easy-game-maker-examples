@@ -147,3 +147,31 @@ describe('audio and budget', () => {
     expect(totalBytes(PUBLIC)).toBeLessThan(30 * MB);
   });
 });
+
+describe('post-processing settings are what the shipped atlases contain', () => {
+  const root = join(__dirname, '..', '..', '..');
+  const cfg = JSON.parse(readFileSync(join(root, 'tools', 'characters.json'), 'utf8')) as {
+    post: { defaults: { frames: Record<string, { dx?: number }> } } & Record<string, { frames: Record<string, { copyOf?: string; scale?: number; dx?: number }> }>;
+  };
+  const read = (dir: string, name: string) => parseAtlas(JSON.parse(readFileSync(join(root, dir, `${name}.json`), 'utf8')));
+
+  for (const c of CHARACTERS) {
+    it(`${c.id}: hit, block and knocked down frames are drawn further back by the configured offsets`, () => {
+      const base = read('art-src/atlas-base', c.id);
+      const shipped = read('public/assets/fighters', c.id);
+      for (const [pose, o] of Object.entries(cfg.post.defaults.frames)) {
+        const b = base.frames[pose] as { anchorX: number };
+        const s = shipped.frames[pose] as { anchorX: number };
+        expect(s.anchorX - b.anchorX, `${c.id}:${pose}`).toBe(o.dx);
+      }
+    });
+
+    it(`${c.id}: frames marked copyOf share the pixels of their source`, () => {
+      const anim = read('public/assets/fighters', `${c.id}-anim`);
+      for (const [pose, o] of Object.entries(cfg.post[c.id]?.frames ?? {})) {
+        if (!o.copyOf) continue;
+        expect(anim.frames[pose], `${c.id}:${pose}`).toEqual(anim.frames[o.copyOf]);
+      }
+    });
+  }
+});

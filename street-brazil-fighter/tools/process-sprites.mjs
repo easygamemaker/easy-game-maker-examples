@@ -12,7 +12,8 @@ import { extractSheet } from './lib/extract.mjs';
 
 const args = parseArgs();
 const cfg = JSON.parse(readFileSync(join(ROOT, 'tools', 'characters.json'), 'utf8'));
-const OUT = join(ROOT, 'public', 'assets', 'fighters');
+// writes the BASE atlases (art-src/atlas-base); tools/post-atlas.mjs turns them into the shipped ones
+const OUT = join(ROOT, 'art-src', 'atlas-base');
 mkdirSync(OUT, { recursive: true });
 const WORK = join(ROOT, 'art-src', 'work');
 mkdirSync(WORK, { recursive: true });

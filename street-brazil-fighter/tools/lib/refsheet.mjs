@@ -11,7 +11,7 @@ const FIT = CELL - 60;
 
 /** poses: 9 frame names of the atlas, in reading order. Returns the PNG path. */
 export async function buildRefSheet(id, poses, outName) {
-  const dir = join(ROOT, 'public', 'assets', 'fighters');
+  const dir = join(ROOT, 'art-src', 'atlas-base');
   const atlas = JSON.parse(readFileSync(join(dir, `${id}.json`), 'utf8'));
   const img = sharp(join(dir, `${id}.png`));
   const comps = [];
