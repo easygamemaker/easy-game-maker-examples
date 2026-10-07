@@ -112,7 +112,7 @@ if (!only) {
   const loops = rows.filter((r) => r.loop);
   const md = `# Relatório de áudio
 
-Gerado por \`node tools/process-audio.mjs\` a partir das saídas brutas da ElevenLabs. Todos os arquivos são mp3 (efeitos e vozes em mono a 80 kbps, músicas em estéreo a 96 kbps). Total: ${(total / 1048576).toFixed(2)} MB em ${rows.length} arquivos.
+Gerado por \`node tools/process-audio.mjs\` a partir das saídas brutas da ElevenLabs. Todos os arquivos são mp3 (MPEG Audio Layer 3, um formato de áudio comprimido aceito por todos os navegadores) (efeitos e vozes em mono a 80 kbps, músicas em estéreo a 96 kbps). Total: ${(total / 1048576).toFixed(2)} MB em ${rows.length} arquivos.
 
 Metas: efeitos e voz do locutor em torno de -16 LUFS (LUFS, Loudness Units relative to Full Scale, volume integrado), músicas em torno de -20 LUFS para ficarem abaixo dos efeitos, e pico real abaixo de -1 dBTP (dBTP, decibéis de pico real). O limitador fixa o pico de amostra em -1,5 dBFS. Em arquivos muito curtos o volume integrado é medido com o trecho preenchido de silêncio até 3 s (o silêncio não entra na medida).
 
@@ -123,11 +123,11 @@ ${section('Músicas', 'music')}
 
 A faixa em loop é montada com o meio da música mais o final misturado com o começo (fusão de ${XFADE} s com curva de potência constante), de modo que o último trecho desemboca no ponto logo após o começo. A tabela compara os primeiros e os últimos 50 ms do arquivo final decodificado. \`Salto\` é o degrau entre a última e a primeira amostra relativo ao pico (um clique audível costuma passar de 0,1).
 
-| Faixa | RMS dos 50 ms iniciais (dBFS) | RMS dos 50 ms finais (dBFS) | Diferença (dB) | Salto |
+| Faixa | RMS (Root Mean Square, valor médio quadrático) dos 50 ms iniciais (dBFS) | RMS dos 50 ms finais (dBFS) | Diferença (dB) | Salto |
 |---|---|---|---|---|
 ${loops.map((r) => `| ${r.id} | ${f1(r.loop.headRmsDb)} | ${f1(r.loop.tailRmsDb)} | ${f1(r.loop.rmsDiffDb)} | ${r.loop.jump.toFixed(3)} |`).join('\n')}
 
-O codificador mp3 deixa cerca de 5 ms de nível baixo no começo de cada arquivo decodificado (atraso do codificador que sobra mesmo com a etiqueta de reprodução sem lacunas). Por isso o `Salto` das faixas de graves pesados sai alto: é um vão de 5 ms a cada volta do loop, não um degrau de clique. Esta medida mostra continuidade de nível e ausência de clique, mas não prova que o ritmo fica alinhado: isso só se confirma ouvindo.
+O codificador mp3 deixa cerca de 5 ms de nível baixo no começo de cada arquivo decodificado (atraso do codificador que sobra mesmo com a etiqueta de reprodução sem lacunas). Por isso o \`Salto\` das faixas de graves pesados sai alto: é um vão de 5 ms a cada volta do loop, não um degrau de clique. Esta medida mostra continuidade de nível e ausência de clique, mas não prova que o ritmo fica alinhado: isso só se confirma ouvindo.
 `;
   writeFileSync(join(ROOT, 'docs', 'audio-report.md'), md);
   console.log(`total ${(total / 1048576).toFixed(2)} MB`);

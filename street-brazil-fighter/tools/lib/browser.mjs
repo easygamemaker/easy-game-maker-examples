@@ -6,7 +6,7 @@ import { extname, join, normalize, resolve } from 'node:path';
 import { ROOT } from '../fal.mjs';
 
 export const DIST = join(ROOT, 'dist');
-const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.webp': 'image/webp', '.wav': 'audio/wav', '.css': 'text/css' };
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.webp': 'image/webp', '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.css': 'text/css' };
 
 /** Playwright is not a dependency: PLAYWRIGHT_DIR, local node_modules, EGM_SDK_DIR or a sibling easy-game-maker checkout. */
 export function loadPlaywright() {

@@ -34,7 +34,8 @@ const hookOf = (page) => page.evaluate(() => {
   return { scene: h.scene, done: h.done, winner: h.winner, frame: h.frame, phase: m?.phase, round: m?.round, wins: m?.wins, hp: m?.fighters.map((f) => f.health), x: m?.fighters.map((f) => f.x), state: m?.fighters.map((f) => f.state) };
 });
 const waitScene = (page, scene, timeout = 20000) => page.waitForFunction((s) => window.__SBF__?.scene === s, scene, { timeout });
-const tap = async (page, key, wait = 120) => { await page.keyboard.down(key); await page.waitForTimeout(100); await page.keyboard.up(key); await page.waitForTimeout(wait); };
+// a press must last a few rendered frames: the menus read key edges once per frame and headless software rendering is slow
+const tap = async (page, key, wait = 200) => { await page.keyboard.down(key); await page.waitForTimeout(260); await page.keyboard.up(key); await page.waitForTimeout(wait); };
 
 if (!args.has('--no-build')) execFileSync('npx', ['vite', 'build'], { cwd: ROOT, stdio: 'inherit' });
 const { chromium } = loadPlaywright();

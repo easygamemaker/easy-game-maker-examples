@@ -2,9 +2,9 @@
 // Writes full-size PNG screenshots and filmstrips (contact sheets of frames sampled during one action) to
 // art-src/playtest (gitignored). A curated subset is converted to WebP into docs/playtest by --curate.
 //
-// Usage: node tools/playtest.mjs [--no-build] [--suite menus,fighters,ko,chaos,autoplay,all] [--only tiao,saci]
+// Usage: node tools/playtest.mjs [--no-build] [--suite menus,fighters,overlap,audio,ko,chaos,cpu,autoplay,all] [--only tiao,saci]
 // Playwright is resolved like in browser-check.mjs (PLAYWRIGHT_DIR, EGM_SDK_DIR, sibling checkout).
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import sharp from 'sharp';
@@ -66,7 +66,7 @@ const waitFrames = (page, n) => page.evaluate((k) => new Promise((ok) => {
 const hold = async (page, key, frames) => { await page.keyboard.down(key); await waitFrames(page, frames); await page.keyboard.up(key); };
 const tap = (page, key, frames = 3) => hold(page, key, frames);
 /** Menu key press in real time (the sim frame counter does not run outside a fight). */
-const press = async (page, key) => { await page.keyboard.down(key); await sleep(110); await page.keyboard.up(key); await sleep(90); };
+const press = async (page, key) => { await page.keyboard.down(key); await sleep(260); await page.keyboard.up(key); await sleep(200); };
 const png = (name, buf) => sharp(buf).png({ compressionLevel: 9 }).toFile(join(OUT, `${name}.png`));
 const full = async (page, name) => png(name, await page.screenshot({ type: 'png' }));
 
@@ -304,9 +304,221 @@ async function cpuMatches() {
   }
 }
 
+
+// ---- overlap: how the sprites of two fighters sit during hits (filmstrips around the hit moment) ------------------
+
+/** Close-range punches, kicks, a special and a jump-in against a standing dummy, for pair types with different body shapes. */
+async function overlapSuite() {
+  const pairs = [['dalva', 'saci', 'pelourinho'], ['tiao', 'curupira', 'sambodromo'], ['rosa', 'craque', 'paulista']];
+  for (const [a, b, stage] of pairs) {
+    const { page, ctx } = await startDummyFight(a, b, stage, '&speed=6');
+    note(`overlap: ${a} vs ${b} dummy on ${stage}`);
+    await page.keyboard.down('KeyD');
+    for (let k = 0; k < 200; k++) {
+      const h = await hook(page);
+      if (Math.abs(h.x[1] - h.x[0]) < 150) break;
+      await waitFrames(page, 4);
+    }
+    await page.keyboard.up('KeyD');
+    const sep = async () => { const h = await hook(page); return Math.round(Math.abs(h.x[1] - h.x[0])); };
+    const film = async (name, action, n = 12) => {
+      await setSpeed(page, 0.1);
+      const infos = await filmstrip(page, `overlap-${a}-vs-${b}-${name}`, { focus: 'mid', width: 640, n, every: 1, action });
+      await setSpeed(page, 6);
+      note(`  ${name}: separation ${await sep()} px, P1 ${[...new Set(infos.map((x) => x.shown[0]))].join(',')} | P2 ${[...new Set(infos.map((x) => x.shown[1]))].join(',')}`);
+      await waitFrames(page, 70);
+    };
+    await film('punch', () => tap(page, 'KeyJ', 2));
+    await film('kick', () => tap(page, 'KeyK', 2), 14);
+    await film('special', () => tap(page, 'KeyL', 2), 18);
+    await waitFrames(page, 90);
+    // jump-in: close the gap again, then jump forward with a kick
+    await page.keyboard.down('KeyD');
+    for (let k = 0; k < 200; k++) { const h = await hook(page); if (Math.abs(h.x[1] - h.x[0]) < 260) break; await waitFrames(page, 4); }
+    await page.keyboard.up('KeyD');
+    await film('jumpin', async () => { await page.keyboard.down('KeyD'); await tap(page, 'KeyW', 2); await waitFrames(page, 14); await tap(page, 'KeyK', 2); await page.keyboard.up('KeyD'); }, 18);
+    await ctx.close();
+  }
+}
+
+// ---- audio: what the game asked to play, read from window.__SBF__.audio (headless cannot be heard) -----------
+
+/** Menu key press that lasts several frames: headless software rendering can be slow, and the menus read key edges once per frame. */
+const slow = async (page, key) => { await page.keyboard.down(key); await sleep(260); await page.keyboard.up(key); await sleep(260); };
+/** Presses a key until `done(audio state)` is true (up to 6 tries): a press shorter than a rendered frame can be missed. */
+async function slowUntil(page, key, done) {
+  for (let i = 0; i < 6; i++) {
+    await slow(page, key);
+    if (done(await audioOf(page))) return true;
+  }
+  return false;
+}
+const audioFailures = [];
+const acheck = (name, ok, detail = '') => {
+  if (!ok) audioFailures.push(name);
+  note(`  ${ok ? 'PASS' : 'FAIL'} ${name}${detail ? '  ' + detail : ''}`);
+};
+const audioOf = (page) => page.evaluate(() => {
+  const a = window.__SBF__?.audio;
+  return a && { unlocked: a.unlocked, hidden: a.hidden, paused: a.paused, music: a.music, playing: { ...a.playing }, volumes: { ...a.volumes }, loaded: a.loaded, failed: [...a.failed], counts: { ...a.counts }, log: a.log.map((l) => `${l.kind}:${l.id}`) };
+});
+const waitAudio = (page, fn, arg, timeout = 8000) => page.waitForFunction(fn, arg, { timeout }).then(() => true).catch(() => false);
+const SOUND_COUNT = readdirSync(join(ROOT, 'public', 'assets', 'audio')).filter((f) => f.endsWith('.mp3')).length;
+const hasLog = (a, entry) => a.log.includes(entry);
+
+async function audioSuite() {
+  note('audio: instrumented run (autoplay allowed, window.__SBF__.audio)');
+  // 1. title: silent until the first gesture, then the title theme; every file loaded
+  {
+    const { page, ctx } = await newPage();
+    await waitScene(page, 'title');
+    await sleep(1200);
+    let a = await audioOf(page);
+    acheck('before any key the game plays nothing', !a.unlocked && a.counts.sfx === 0 && a.counts.voice === 0 && Object.keys(a.playing).length === 0);
+    acheck(`all ${SOUND_COUNT} audio files loaded, none failed`, a.loaded === SOUND_COUNT && a.failed.length === 0, `loaded ${a.loaded}, failed ${a.failed.length}`);
+    await slow(page, 'ShiftLeft');
+    const ok = await waitAudio(page, () => (window.__SBF__.audio.playing.music_title ?? 0) > 0.9);
+    a = await audioOf(page);
+    acheck('first gesture starts the title theme (fade in to full level)', ok && a.music === 'music_title', `music ${a.music}, gain ${a.playing.music_title}`);
+
+    // 2. audio menu on the title (rows are clicked: deterministic; the arrow keys then change the value)
+    const click = async (x, y) => { await page.mouse.move(x, y); await sleep(120); await page.mouse.click(x, y); await sleep(250); };
+    await click(650, 581); // AUDIO SETTINGS
+    a = await audioOf(page);
+    acheck('title menu opens the audio menu', a.log.includes('sfx:ui_select'));
+    await click(650, 250); // MASTER row
+    await slowUntil(page, 'ArrowRight', (x) => Math.abs(x.volumes.master - 0.9) < 1e-6);
+    a = await audioOf(page);
+    acheck('audio menu: right on MASTER raises it by 10 percent', Math.abs(a.volumes.master - 0.9) < 1e-6, `master ${a.volumes.master}`);
+    await click(650, 460); // MUTE row
+    a = await audioOf(page);
+    acheck('audio menu: MUTE row toggles mute', a.volumes.muted === true);
+    await slowUntil(page, 'KeyM', (x) => x.volumes.muted === false);
+    a = await audioOf(page);
+    acheck('M key unmutes again', a.volumes.muted === false);
+    await slowUntil(page, 'KeyM', (x) => x.volumes.muted === true);
+    a = await audioOf(page);
+    acheck('M key mutes', a.volumes.muted === true);
+    await slowUntil(page, 'KeyM', (x) => x.volumes.muted === false);
+    const stored = await page.evaluate(() => { try { return JSON.parse(localStorage.getItem('sbf.audio.v1')); } catch { return null; } });
+    acheck('settings are saved in localStorage', stored && Math.abs(stored.master - 0.9) < 1e-6 && stored.muted === false, JSON.stringify(stored));
+    await slow(page, 'Escape');
+    await page.reload();
+    await waitScene(page, 'title');
+    await slow(page, 'ShiftLeft');
+    await sleep(400);
+    a = await audioOf(page);
+    acheck('after a reload the master volume is still 90 percent', Math.abs(a.volumes.master - 0.9) < 1e-6, `master ${a.volumes.master}`);
+    await ctx.close();
+  }
+
+  // 3. real menu flow to a 1P fight: select theme with crossfade, name read out, fight music, banner voices
+  {
+    const { page, ctx } = await newPage();
+    await waitScene(page, 'title');
+    for (let i = 0; i < 5 && (await hook(page)).scene !== 'select'; i++) { await slow(page, 'Enter'); }
+    await waitScene(page, 'select');
+    let ok = await waitAudio(page, () => (window.__SBF__.audio.playing.music_select ?? 0) > 0.9 && window.__SBF__.audio.playing.music_title === undefined, null, 9000);
+    let a = await audioOf(page);
+    acheck('character select crossfades from the title theme to the select theme', ok, `music ${a.music}, playing ${JSON.stringify(a.playing)}`);
+    await slowUntil(page, 'KeyJ', (x) => x.log.includes('voice:name_tiao'));
+    a = await audioOf(page);
+    acheck('locking a fighter plays the name read by the announcer', hasLog(a, 'voice:name_tiao'));
+    await waitScene(page, 'stage', 60000);
+    for (let i = 0; i < 5 && (await hook(page)).scene !== 'fight'; i++) { await slow(page, 'KeyJ'); await sleep(600); }
+    await waitScene(page, 'fight', 60000);
+    await waitPhase(page, 'fight');
+    ok = await waitAudio(page, () => (window.__SBF__.audio.playing.music_fight_b ?? 0) > 0.5, null, 9000);
+    a = await audioOf(page);
+    acheck('the fight starts the fight track mapped to the stage (copacabana: music_fight_b)', ok && a.music === 'music_fight_b', `music ${a.music}`);
+    acheck('round banner: gong and "Round one" were played', hasLog(a, 'sfx:round_start') && hasLog(a, 'voice:ann_round_1'), a.log.filter((l) => l.startsWith('voice')).join(','));
+    acheck('FIGHT! banner: the announcer said "Fight"', hasLog(a, 'voice:ann_fight'));
+    // sound effects on real actions
+    for (let i = 0; i < 4; i++) { await tap(page, 'KeyJ', 3); await waitFrames(page, 18); }
+    await tap(page, 'KeyW', 3); await waitFrames(page, 60);
+    a = await audioOf(page);
+    acheck('attacks make sound effects', ['punch', 'punch_2', 'kick', 'kick_2'].some((n) => hasLog(a, `sfx:${n}`)), a.log.filter((l) => l.startsWith('sfx')).slice(-6).join(','));
+    acheck('jump and landing sounds', hasLog(a, 'sfx:jump') && hasLog(a, 'sfx:land'));
+    // pause: the music is silenced, resume brings it back, pause blip played
+    await slowUntil(page, 'Enter', (x) => x.paused);
+    ok = await waitAudio(page, () => window.__SBF__.paused && (window.__SBF__.audio.playing.music_fight_b ?? 1) < 0.02, null, 4000);
+    a = await audioOf(page);
+    acheck('pause silences the music and plays the pause sound', ok && hasLog(a, 'sfx:pause'), `gain ${a.playing.music_fight_b}`);
+    await slowUntil(page, 'Enter', (x) => !x.paused);
+    ok = await waitAudio(page, () => !window.__SBF__.paused && (window.__SBF__.audio.playing.music_fight_b ?? 0) > 0.5, null, 6000);
+    acheck('resuming brings the music back', ok);
+    // hidden tab: no new sounds
+    const before = (await audioOf(page)).log.length;
+    await page.evaluate(() => { Object.defineProperty(document, 'hidden', { value: true, configurable: true }); document.dispatchEvent(new Event('visibilitychange')); });
+    await tap(page, 'KeyJ', 3); await sleep(500);
+    a = await audioOf(page);
+    acheck('a hidden tab is silent (no new sound is started)', a.hidden && a.log.length === before, `hidden ${a.hidden}, new sounds ${a.log.length - before}`);
+    await page.evaluate(() => { Object.defineProperty(document, 'hidden', { value: false, configurable: true }); document.dispatchEvent(new Event('visibilitychange')); });
+    await ctx.close();
+  }
+
+  // 4. hits, KO, round 2 and the match end against a dummy at 3x speed (sounds stay on up to 4x)
+  {
+    const { page, ctx } = await newPage('?quick=1&p1=dalva&p2=saci&stage=copacabana&p2mode=dummy&seed=3&speed=3');
+    await waitScene(page, 'fight');
+    await slow(page, 'ShiftLeft');
+    await waitPhase(page, 'fight');
+    let duckMin = 1, maxGain = 0, seenKo = false, koAt = 0;
+    const t0 = Date.now();
+    let h = await hook(page);
+    while (h.scene === 'fight' && Date.now() - t0 < 240000) {
+      if (h.phase === 'fight') {
+        if (Math.abs(h.x[1] - h.x[0]) > 150) await page.keyboard.down('KeyD');
+        else { await page.keyboard.up('KeyD'); await tap(page, Math.random() < 0.5 ? 'KeyJ' : 'KeyK', 3); }
+      } else await page.keyboard.up('KeyD');
+      const a = await audioOf(page);
+      const g = a.playing.music_fight_b ?? 0; // copacabana
+      maxGain = Math.max(maxGain, g);
+      if (hasLog(a, 'voice:ann_ko') && koAt === 0) koAt = Date.now();
+      // only the second after the first KO line counts: later the fight music fades out for the match end
+      if (koAt > 0 && Date.now() - koAt < 1500 && maxGain > 0.8) { seenKo = true; duckMin = Math.min(duckMin, g); }
+      await sleep(40);
+      h = await hook(page);
+    }
+    await page.keyboard.up('KeyD');
+    await sleep(2500);
+    const a = await audioOf(page);
+    acheck('hits play hit sounds and the defender grunts', (hasLog(a, 'sfx:hit') || hasLog(a, 'sfx:hit_2')) && hasLog(a, 'voice:saci_hurt'));
+    acheck('KO: big impact, announcer "K.O." and the loser cry', hasLog(a, 'sfx:ko') && hasLog(a, 'voice:ann_ko') && hasLog(a, 'voice:saci_ko'));
+    acheck('the second round is announced', hasLog(a, 'voice:ann_round_2'));
+    acheck('the match result is announced ("You win")', hasLog(a, 'voice:ann_you_win'), a.log.filter((l) => l.startsWith('voice:ann')).join(','));
+    acheck('the music ducks while the announcer speaks the KO', seenKo && duckMin < 0.6, `lowest gain after full level ${duckMin.toFixed(2)}`);
+    acheck('the result screen plays the victory jingle', h.scene === 'result' && a.music === 'music_victory', `scene ${h.scene}, music ${a.music}`);
+    writeFileSync(join(ROOT, 'docs', 'playtest', 'audio-log.json'), JSON.stringify({ note: 'What the game asked to play during a scripted KO route (window.__SBF__.audio.log), in order.', log: a.log }, null, 1));
+    await ctx.close();
+  }
+
+  // 5. a file that fails to load: the game keeps working and records it
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1300, height: 700 } });
+    const page = await ctx.newPage();
+    const pageErrors = [];
+    page.on('pageerror', (e) => pageErrors.push(e.message));
+    await page.route(/\/(hit|music_title)\.mp3$/, (r) => r.abort());
+    await page.goto(base);
+    await waitScene(page, 'title');
+    await slow(page, 'ShiftLeft');
+    await sleep(1500);
+    await page.mouse.click(650, 581);
+    await sleep(400);
+    let a = await audioOf(page);
+    acheck('missing files are recorded and the rest keeps playing', a.failed.length === 2 && hasLog(a, 'sfx:ui_select') && a.playing.music_title === undefined, `failed ${a.failed.join(' | ')}; log ${a.log.join(',')}`);
+    acheck('a missing file raises no page error', pageErrors.length === 0, pageErrors.join(' | '));
+    await ctx.close();
+  }
+  note(`audio: ${audioFailures.length ? 'FAILED ' + audioFailures.join('; ') : 'all checks passed'}`);
+}
+
 try {
   if (want('menus')) await menus();
   if (want('fighters')) for (const [i, id] of fighters.entries()) await fighterSuite(id, i);
+  if (want('overlap')) await overlapSuite();
+  if (want('audio')) await audioSuite();
   if (want('ko')) for (const [i, id] of fighters.entries()) await koRoute(id, i);
   if (want('chaos')) for (let i = 0; i < fighters.length; i += 3) await Promise.all(fighters.slice(i, i + 3).map((id, j) => chaos(id, i + j)));
   if (want('cpu')) await cpuMatches();
@@ -317,4 +529,4 @@ try {
 }
 note(`console errors: ${errors.length}${errors.length ? ' ' + errors.slice(0, 5).join(' | ') : ''}`);
 writeFileSync(join(OUT, 'report.txt'), report.join('\n') + '\n');
-process.exit(errors.length ? 1 : 0);
+process.exit(errors.length || audioFailures.length ? 1 : 0);
