@@ -1,0 +1,154 @@
+{
+ "image": "dalva.png",
+ "size": {
+  "w": 1927,
+  "h": 1337
+ },
+ "bodyHeight": 400,
+ "frames": {
+  "idle": {
+   "x": 0,
+   "y": 0,
+   "w": 239,
+   "h": 408,
+   "anchorX": 123,
+   "anchorY": 404
+  },
+  "walk": {
+   "x": 241,
+   "y": 0,
+   "w": 241,
+   "h": 420,
+   "anchorX": 130,
+   "anchorY": 416
+  },
+  "jump": {
+   "x": 484,
+   "y": 0,
+   "w": 247,
+   "h": 400,
+   "anchorX": 119,
+   "anchorY": 396
+  },
+  "crouch": {
+   "x": 733,
+   "y": 0,
+   "w": 228,
+   "h": 364,
+   "anchorX": 108,
+   "anchorY": 360
+  },
+  "punch": {
+   "x": 963,
+   "y": 0,
+   "w": 314,
+   "h": 424,
+   "anchorX": 114,
+   "anchorY": 420
+  },
+  "kick": {
+   "x": 1279,
+   "y": 0,
+   "w": 327,
+   "h": 432,
+   "anchorX": 116,
+   "anchorY": 428
+  },
+  "block": {
+   "x": 1608,
+   "y": 0,
+   "w": 200,
+   "h": 436,
+   "anchorX": 92,
+   "anchorY": 432
+  },
+  "hit": {
+   "x": 0,
+   "y": 438,
+   "w": 282,
+   "h": 430,
+   "anchorX": 178,
+   "anchorY": 426
+  },
+  "down": {
+   "x": 284,
+   "y": 438,
+   "w": 425,
+   "h": 163,
+   "anchorX": 202,
+   "anchorY": 159
+  },
+  "punch_windup": {
+   "x": 711,
+   "y": 438,
+   "w": 314,
+   "h": 425,
+   "anchorX": 114,
+   "anchorY": 421
+  },
+  "kick_windup": {
+   "x": 1027,
+   "y": 438,
+   "w": 243,
+   "h": 440,
+   "anchorX": 104,
+   "anchorY": 436
+  },
+  "special_charge": {
+   "x": 1272,
+   "y": 438,
+   "w": 255,
+   "h": 392,
+   "anchorX": 123,
+   "anchorY": 388
+  },
+  "special_release": {
+   "x": 1529,
+   "y": 438,
+   "w": 398,
+   "h": 407,
+   "anchorX": 130,
+   "anchorY": 403
+  },
+  "crouch_block": {
+   "x": 0,
+   "y": 880,
+   "w": 262,
+   "h": 331,
+   "anchorX": 115,
+   "anchorY": 327
+  },
+  "crouch_punch": {
+   "x": 264,
+   "y": 880,
+   "w": 348,
+   "h": 334,
+   "anchorX": 130,
+   "anchorY": 330
+  },
+  "jump_kick": {
+   "x": 614,
+   "y": 880,
+   "w": 309,
+   "h": 344,
+   "anchorX": 131,
+   "anchorY": 340
+  },
+  "victory": {
+   "x": 925,
+   "y": 880,
+   "w": 253,
+   "h": 457,
+   "anchorX": 130,
+   "anchorY": 456
+  },
+  "fx": {
+   "x": 1180,
+   "y": 880,
+   "w": 313,
+   "h": 309,
+   "anchorX": 130,
+   "anchorY": 305
+  }
+ }
+}
