@@ -1,12 +1,11 @@
 import type { App, Texture } from 'easy-game-maker';
 import { CHARACTERS } from '../data/characters';
 import { STAGES } from '../data/stages';
+import { AudioDirector } from '../audio/director';
+import { SOUND_IDS, soundUrl, type SoundId } from '../audio/catalog';
+import { browserStore } from '../audio/settings';
 import { parseAtlas } from './atlas';
 
-export const SOUND_NAMES = [
-  'punch', 'kick', 'hit', 'block', 'special', 'ko', 'round_start', 'ui_move', 'ui_select',
-] as const;
-export type SoundName = (typeof SOUND_NAMES)[number];
 
 export interface FighterFrame {
   readonly texture: Texture;
@@ -20,25 +19,17 @@ export type FighterFrames = ReadonlyMap<string, FighterFrame>;
 /** Fighters that ship an animation atlas (<id>-anim.json/png) next to the key-pose atlas. */
 export const ANIMATED_FIGHTERS: readonly string[] = ['tiao', 'dalva', 'saci', 'curupira', 'craque', 'rosa'];
 
-const soundUrl = (name: SoundName): string => `assets/audio/${name}.wav`;
-
 /** Loads and keeps every texture and sound of the game. Missing art is tolerated and reported. */
 export class GameAssets {
   private readonly fighters = new Map<string, FighterFrames>();
   private readonly thumbs = new Set<string>();
-  private readonly sounds = new Set<string>();
   readonly problems: string[] = [];
-  /** Browsers only allow audio after a user gesture, so sound stays off until the first key or click. */
-  private unlocked = false;
+  /** Music, effects and the announcer. Browsers only allow audio after a user gesture, so it stays silent until the first key or click. */
+  readonly audio: AudioDirector;
 
   constructor(private readonly app: App) {
-    const unlock = (): void => {
-      this.unlocked = true;
-      window.removeEventListener('keydown', unlock, true);
-      window.removeEventListener('pointerdown', unlock, true);
-    };
-    window.addEventListener('keydown', unlock, true);
-    window.addEventListener('pointerdown', unlock, true);
+    this.audio = new AudioDirector(app.audio, browserStore());
+    this.audio.attachBrowser(window, app.input);
   }
 
   hasFighter(id: string): boolean {
@@ -59,13 +50,14 @@ export class GameAssets {
     return this.app.assets.loadImageFromUrl(`assets/stages/${id}.webp`);
   }
 
-  play(name: SoundName, volume = 1): void {
-    if (this.unlocked && this.sounds.has(name)) this.app.audio.play(soundUrl(name), { volume });
+  /** Plays an interface sound effect. */
+  play(name: SoundId, volume = 1): void {
+    this.audio.sfx(name, volume);
   }
 
   /** Loads everything the menus and fights need. `onProgress` gets a 0..1 fraction. */
   async loadAll(onProgress: (fraction: number, label: string) => void): Promise<void> {
-    const total = STAGES.length + CHARACTERS.length * 2 + ANIMATED_FIGHTERS.length * 2 + SOUND_NAMES.length;
+    const total = STAGES.length + CHARACTERS.length * 2 + ANIMATED_FIGHTERS.length * 2 + SOUND_IDS.length;
     let done = 0;
     const step = (label: string): void => onProgress(++done / total, label);
     const attempt = async (label: string, job: () => Promise<void>): Promise<boolean> => {
@@ -86,9 +78,10 @@ export class GameAssets {
           if (ok) this.thumbs.add(s.id);
         }),
       ),
-      ...SOUND_NAMES.map((n) =>
+      ...SOUND_IDS.map((n) =>
         attempt(`sound ${n}`, () => this.app.assets.load({ sounds: [soundUrl(n)] })).then((ok) => {
-          if (ok) this.sounds.add(n);
+          if (ok) this.audio.markLoaded(n);
+          else this.audio.markFailed(n, 'failed to load');
         }),
       ),
       ...CHARACTERS.map(async (c) => {

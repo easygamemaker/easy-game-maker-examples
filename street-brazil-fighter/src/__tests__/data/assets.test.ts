@@ -4,7 +4,8 @@ import { describe, expect, it } from 'vitest';
 import { CHARACTERS, MOVE_KEYS, POSE_IDS } from '../../data/characters';
 import { STAGES } from '../../data/stages';
 import { ATTACK_CLIP_PREFIX, IDLE_CLIP, WALK_CLIP } from '../../game/animation';
-import { ANIMATED_FIGHTERS, SOUND_NAMES } from '../../game/assets';
+import { ANIMATED_FIGHTERS } from '../../game/assets';
+import { SOUND_IDS } from '../../audio/catalog';
 import { parseAtlas } from '../../game/atlas';
 
 const PUBLIC = join(__dirname, '..', '..', '..', 'public', 'assets');
@@ -126,15 +127,51 @@ describe('stages', () => {
 });
 
 describe('audio and budget', () => {
-  it('every sound effect exists as a wav', () => {
-    for (const n of SOUND_NAMES) {
-      const f = join(PUBLIC, 'audio', `${n}.wav`);
+  it('every sound exists as an mp3 with a valid header', () => {
+    for (const n of SOUND_IDS) {
+      const f = join(PUBLIC, 'audio', `${n}.mp3`);
       expect(existsSync(f), n).toBe(true);
-      expect(readFileSync(f).subarray(0, 4).toString('latin1')).toBe('RIFF');
+      const head = readFileSync(f).subarray(0, 3);
+      // an ID3 tag or an MPEG frame sync (0xFF 0xFB/0xFA/0xF3/0xF2)
+      expect(head.toString('latin1') === 'ID3' || (head[0] === 0xff && (head[1] as number) >= 0xe0), n).toBe(true);
     }
   });
 
-  it('shipped assets stay under 30 MB', () => {
+  it('ships no leftover audio files that the game does not load', () => {
+    const known = new Set(SOUND_IDS.map((n) => `${n}.mp3`));
+    for (const f of readdirSync(join(PUBLIC, 'audio'))) expect(known.has(f), f).toBe(true);
+  });
+
+  it('audio stays under 8 MB and all shipped assets under 30 MB', () => {
+    expect(totalBytes(join(PUBLIC, 'audio'))).toBeLessThan(8 * MB);
     expect(totalBytes(PUBLIC)).toBeLessThan(30 * MB);
   });
+});
+
+describe('post-processing settings are what the shipped atlases contain', () => {
+  const root = join(__dirname, '..', '..', '..');
+  const cfg = JSON.parse(readFileSync(join(root, 'tools', 'characters.json'), 'utf8')) as {
+    post: { defaults: { frames: Record<string, { dx?: number }> } } & Record<string, { frames: Record<string, { copyOf?: string; scale?: number; dx?: number }> }>;
+  };
+  const read = (dir: string, name: string) => parseAtlas(JSON.parse(readFileSync(join(root, dir, `${name}.json`), 'utf8')));
+
+  for (const c of CHARACTERS) {
+    it(`${c.id}: hit, block and knocked down frames are drawn further back by the configured offsets`, () => {
+      const base = read('art-src/atlas-base', c.id);
+      const shipped = read('public/assets/fighters', c.id);
+      for (const [pose, o] of Object.entries(cfg.post.defaults.frames)) {
+        const b = base.frames[pose] as { anchorX: number };
+        const s = shipped.frames[pose] as { anchorX: number };
+        expect(s.anchorX - b.anchorX, `${c.id}:${pose}`).toBe(o.dx);
+      }
+    });
+
+    it(`${c.id}: frames marked copyOf share the pixels of their source`, () => {
+      const anim = read('public/assets/fighters', `${c.id}-anim`);
+      for (const [pose, o] of Object.entries(cfg.post[c.id]?.frames ?? {})) {
+        if (!o.copyOf) continue;
+        expect(anim.frames[pose], `${c.id}:${pose}`).toEqual(anim.frames[o.copyOf]);
+      }
+    });
+  }
 });

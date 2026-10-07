@@ -13,21 +13,40 @@ export function clampX(x: number): number {
   return Math.min(MAX_X, Math.max(MIN_X, x));
 }
 
+/** How far a fighter travelled towards the other one during the frame (never negative). */
+function approach(prev: FighterState, now: FighterState, dir: 1 | -1): number {
+  return Math.max(0, (now.x - prev.x) * dir);
+}
+
 /**
- * Pushes overlapping grounded fighters apart, half each. When one of them is
- * against a wall the other takes the whole push. Airborne fighters have no
- * pushbox so a jump can cross over; the overlap is resolved when they land
- * (each fighter keeps the side its x is on).
+ * Share of the correction taken by fighter `a` (0..1). The one who walked, dashed or slid into the other gives way,
+ * in proportion to how far each one travelled towards the other this frame; when neither moved (or no previous
+ * positions are known) the correction is split evenly.
  */
-export function resolvePushboxes(pair: Pair): Pair {
+export function pushShare(prev: Pair | null, pair: Pair): number {
+  if (prev === null) return 0.5;
+  const dir: 1 | -1 = pair[1].x >= pair[0].x ? 1 : -1;
+  const ma = approach(prev[0], pair[0], dir);
+  const mb = approach(prev[1], pair[1], dir === 1 ? -1 : 1);
+  return ma + mb > 0.001 ? ma / (ma + mb) : 0.5;
+}
+
+/**
+ * Keeps grounded fighters at least PUSHBOX_WIDTH apart, every frame. The overlap is taken back mostly by whoever moved
+ * into the other (see `pushShare`); when one of them is against a wall the other takes the whole push. Airborne
+ * fighters have no pushbox so a jump can cross over; the overlap is resolved when they land (each fighter keeps the
+ * side its x is on).
+ */
+export function resolvePushboxes(pair: Pair, prev: Pair | null = null): Pair {
   const [a, b] = pair;
   if (isAirborne(a) || isAirborne(b)) return pair;
   const dx = b.x - a.x;
   const overlap = PUSHBOX_WIDTH - Math.abs(dx);
   if (overlap <= 0) return pair;
   const sign = dx > 0 ? 1 : dx < 0 ? -1 : a.facing;
-  let ax = clampX(a.x - (sign * overlap) / 2);
-  let bx = clampX(b.x + (sign * overlap) / 2);
+  const shareA = pushShare(prev, pair);
+  let ax = clampX(a.x - sign * overlap * shareA);
+  let bx = clampX(b.x + sign * overlap * (1 - shareA));
   if (Math.abs(bx - ax) < PUSHBOX_WIDTH) {
     const aAtWall = ax === MIN_X || ax === MAX_X;
     if (aAtWall) {
@@ -89,7 +108,7 @@ export function updateFacing(pair: Pair): Pair {
 /** Full spacing pass: walls, pushboxes, max separation, facing. */
 export function resolveSpacing(prev: Pair, pair: Pair): Pair {
   const walled: Pair = [{ ...pair[0], x: clampX(pair[0].x) }, { ...pair[1], x: clampX(pair[1].x) }];
-  const pushed = resolvePushboxes(walled);
+  const pushed = resolvePushboxes(walled, prev);
   const separated = enforceMaxSeparation(prev, pushed);
   const clamped: Pair = [{ ...separated[0], x: clampX(separated[0].x) }, { ...separated[1], x: clampX(separated[1].x) }];
   return updateFacing(clamped);

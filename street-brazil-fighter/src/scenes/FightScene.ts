@@ -10,14 +10,15 @@ import { TOUCH_BUTTONS, TouchPad, isTouchDevice } from '../game/touch';
 import { ctxOf, goto, hook, type GameContext } from '../game/context';
 import { COLORS, GROUND_SCREEN_Y, H, STAGE_WORLD_H, STAGE_WORLD_W, W } from '../game/layout';
 import { Label, rect } from '../game/ui';
+import { AudioMenu } from '../game/audioMenu';
+import { fightMusicFor } from '../audio/catalog';
+import { cuesForEvents } from '../audio/mapping';
 import { activeHitbox, hurtboxes, projectileBox } from '../sim/geometry';
 import { METER_MAX, createRng, nextInt, type MatchState, type SimEvent, type WorldBox } from '../sim';
 
 const RESULT_DELAY_FRAMES = 200;
-
-const SFX_BY_MOVE: Record<string, 'punch' | 'kick'> = {
-  lightPunch: 'punch', crouchPunch: 'punch', heavyKick: 'kick', crouchKick: 'kick', jumpKick: 'kick',
-};
+/** Above this simulation speed (tests that fast-forward) the sounds would pile up, so the fight stays silent. */
+const MAX_AUDIBLE_SPEED = 4;
 
 const outline = (box: WorldBox, color: string): RectShape => {
   const r = new RectShape({ width: box.w, height: box.h, fill: '#00000000', stroke: color, strokeWidth: 2 });
@@ -39,6 +40,7 @@ export class FightScene extends Scene {
   private debug = new Group();
   private pauseLayer = new Group();
   private pauseMenu!: MenuList;
+  private audioMenu!: AudioMenu;
   private touch = new TouchPad();
   private paused = false;
   private resultTimer = 0;
@@ -127,6 +129,7 @@ export class FightScene extends Scene {
     h.done = false;
     h.winner = null;
     h.match = this.runner.match;
+    this.ctx.assets.audio.music(fightMusicFor(this.ctx.session.stageId));
   }
 
   // ---- touch controls -------------------------------------------------------
@@ -145,6 +148,10 @@ export class FightScene extends Scene {
   private readonly onPointerDown = (e: unknown): void => {
     const p = e as { x: number; y: number; pointerId: number };
     if (this.paused) {
+      if (this.audioMenu.visible) {
+        if (this.audioMenu.press(p.x, p.y)) this.audioMenu.close();
+        return;
+      }
       this.handlePause(this.pauseMenu.pointerPress(p.x, p.y));
       return;
     }
@@ -154,7 +161,8 @@ export class FightScene extends Scene {
   private readonly onPointerMove = (e: unknown): void => {
     const p = e as { x: number; y: number; pointerId: number };
     if (this.paused) {
-      this.pauseMenu.pointerHover(p.x, p.y);
+      if (this.audioMenu.visible) this.audioMenu.hover(p.x, p.y);
+      else this.pauseMenu.pointerHover(p.x, p.y);
       return;
     }
     this.touch.move(p.pointerId, p.x, p.y);
@@ -173,16 +181,22 @@ export class FightScene extends Scene {
     this.pauseLayer.add(rect(0, 0, W, H, '#000000', 0.62));
     this.pauseLayer.add(new Label('PAUSED', W / 2, 190, { size: 90, color: COLORS.gold }));
     this.pauseMenu = new MenuList(
-      [{ id: 'resume', text: 'RESUME' }, { id: 'restart', text: 'RESTART MATCH' }, { id: 'quit', text: 'QUIT TO MENU' }],
+      [{ id: 'resume', text: 'RESUME' }, { id: 'restart', text: 'RESTART MATCH' }, { id: 'audio', text: 'AUDIO SETTINGS' }, { id: 'quit', text: 'QUIT TO MENU' }],
       W / 2, 330, 70, 34,
     );
     this.pauseLayer.add(this.pauseMenu);
+    this.audioMenu = new AudioMenu(this.ctx.assets.audio);
+    this.audioMenu.zIndex = 10;
+    this.pauseLayer.add(this.audioMenu);
     this.add(this.pauseLayer);
   }
 
   private setPaused(value: boolean): void {
     this.paused = value;
     this.pauseLayer.visible = value;
+    if (!value) this.audioMenu.close();
+    this.ctx.assets.audio.setPaused(value);
+    if (value) this.ctx.assets.audio.sfx('pause');
     hook().paused = value;
   }
 
@@ -192,7 +206,8 @@ export class FightScene extends Scene {
     if (ev.type === 'move') assets.play('ui_move');
     if (ev.type !== 'confirm') return;
     assets.play('ui_select');
-    if (ev.id === 'resume') this.setPaused(false);
+    if (ev.id === 'audio') this.audioMenu.open();
+    else if (ev.id === 'resume') this.setPaused(false);
     else if (ev.id === 'restart') {
       this.setPaused(false);
       this.restart();
@@ -216,6 +231,10 @@ export class FightScene extends Scene {
     if (this.leaving) return;
     const edges = this.ctx.controls.edges(0, true);
     if (this.paused) {
+      if (this.audioMenu.visible) {
+        if (this.audioMenu.navigate(edges)) this.audioMenu.close();
+        return;
+      }
       this.handlePause(this.pauseMenu.navigate(edges));
       if (edges.start || edges.back) this.setPaused(false);
       return;
@@ -233,17 +252,11 @@ export class FightScene extends Scene {
     this.afterMatchCheck(edges.confirm);
   }
 
+  /** Maps the step's sim events to sounds (src/audio/mapping.ts). Fast-forward runs (speed above 4) stay silent. */
   private playSounds(events: readonly SimEvent[]): void {
-    if (hook().speed > 1) return;
-    const { assets } = this.ctx;
-    for (const e of events) {
-      if (e.type === 'attackStart') assets.play(SFX_BY_MOVE[e.moveId] ?? 'punch', 0.7);
-      else if (e.type === 'specialStart') assets.play('special');
-      else if (e.type === 'hit') assets.play('hit');
-      else if (e.type === 'block') assets.play('block');
-      else if (e.type === 'ko') assets.play('ko');
-      else if (e.type === 'roundStart') assets.play('round_start');
-    }
+    if (hook().speed > MAX_AUDIBLE_SPEED || events.length === 0) return;
+    const cues = cuesForEvents(events, { match: this.runner.match, mode: this.ctx.session.mode });
+    this.ctx.assets.audio.playAll(cues);
   }
 
   private render(m: MatchState): void {
@@ -278,6 +291,7 @@ export class FightScene extends Scene {
   private afterMatchCheck(confirm: boolean): void {
     const m = this.runner.match;
     if (m.phase !== 'matchEnd') return;
+    this.ctx.assets.audio.music(null); // the fight music fades out; the result screen brings its own jingle
     const h = hook();
     h.done = true;
     h.winner = m.winner ?? null;

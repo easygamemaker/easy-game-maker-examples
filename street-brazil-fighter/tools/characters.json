@@ -95,5 +95,80 @@
       "holeFill": true,
       "frames": {}
     }
+  },
+  "_post": "post: settings of tools/post-atlas.mjs (no image model involved). defaults.frames applies to every fighter: dx shifts the draw anchor (the sprite is drawn that many atlas px further back) so the leaning hit, block and knocked down frames do not cover the opponent's head. <id>.frames.<pose>: { scale (about the feet anchor, from tools/consistency.mjs), copyOf (reuse another frame), dx, dy, color: false }. colorStrength and colorMinDE tune the palette match towards idle_0.",
+  "post": {
+    "defaults": {
+      "frames": {
+        "hit": {
+          "dx": 50
+        },
+        "block": {
+          "dx": 40
+        },
+        "crouch_block": {
+          "dx": 40
+        },
+        "down": {
+          "dx": 50
+        }
+      }
+    },
+    "tiao": {
+      "frames": {
+        "kick_2": {
+          "copyOf": "idle_0"
+        },
+        "special_2": {
+          "copyOf": "idle_0"
+        },
+        "idle_2": {
+          "copyOf": "idle_1"
+        }
+      }
+    },
+    "dalva": {
+      "frames": {
+        "special_2": {
+          "scale": 0.94
+        },
+        "kick_0": {
+          "scale": 0.94
+        }
+      }
+    },
+    "saci": {
+      "frames": {
+        "walk_3": {
+          "scale": 0.9
+        },
+        "walk_5": {
+          "scale": 0.95
+        },
+        "kick_0": {
+          "scale": 0.95
+        }
+      }
+    },
+    "curupira": {
+      "frames": {
+        "walk_3": {
+          "scale": 0.95
+        },
+        "special_2": {
+          "copyOf": "punch_2"
+        }
+      }
+    },
+    "craque": {
+      "frames": {
+        "kick_2": {
+          "copyOf": "idle_0"
+        }
+      }
+    },
+    "rosa": {
+      "frames": {}
+    }
   }
 }

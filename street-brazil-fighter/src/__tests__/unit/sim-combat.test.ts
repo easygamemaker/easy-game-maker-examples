@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { getCharacter } from '../../data/characters';
 import { blocks, chipDamage, comboScale, scaledDamage } from '../../sim/combat';
-import { KNOCKDOWN_LIE_FRAMES } from '../../sim/constants';
+import { KNOCKDOWN_LIE_FRAMES, PUSHBOX_WIDTH } from '../../sim/constants';
 import { createFighter } from '../../sim/fighter';
 import { input, neutralInput, patchFighters, placeFighters, runFrames, startFight } from '../../sim/testing';
 import type { InputPair } from '../../sim/testing';
@@ -274,8 +274,9 @@ describe('combo scaling', () => {
   it('a hit after the defender recovered starts a new combo', () => {
     const lp = getCharacter('craque').moves.lightPunch;
     const total = lp.startup + lp.active + lp.recovery;
-    const state = placeFighters(startFight({ p1: 'craque', p2: 'craque', hitStopFrames: 0 }), 700, 780);
-    const run = runFrames(state, 40, (i) => [input({ punch: i === 0 || i === total }), N]);
+    const state = placeFighters(startFight({ p1: 'craque', p2: 'craque', hitStopFrames: 0 }), 700, 700 + PUSHBOX_WIDTH);
+    // the first hit slides the defender out of reach (the minimum separation is wider now): step in before the second punch
+    const run = runFrames(state, 50, (i) => [input({ punch: i === 0 || i === total + 8, right: i >= total && i < total + 8 }), N]);
     const hits = eventsOf(run.events, 'hit');
     expect(hits).toHaveLength(2);
     expect(hits[1]?.comboCount).toBe(1);

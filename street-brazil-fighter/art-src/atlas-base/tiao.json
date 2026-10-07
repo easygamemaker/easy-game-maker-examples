@@ -1,0 +1,154 @@
+{
+ "image": "tiao.png",
+ "size": {
+  "w": 1939,
+  "h": 1266
+ },
+ "bodyHeight": 400,
+ "frames": {
+  "idle": {
+   "x": 0,
+   "y": 0,
+   "w": 240,
+   "h": 408,
+   "anchorX": 106,
+   "anchorY": 404
+  },
+  "walk": {
+   "x": 242,
+   "y": 0,
+   "w": 247,
+   "h": 406,
+   "anchorX": 125,
+   "anchorY": 402
+  },
+  "jump": {
+   "x": 491,
+   "y": 0,
+   "w": 235,
+   "h": 397,
+   "anchorX": 128,
+   "anchorY": 393
+  },
+  "crouch": {
+   "x": 728,
+   "y": 0,
+   "w": 275,
+   "h": 318,
+   "anchorX": 115,
+   "anchorY": 314
+  },
+  "punch": {
+   "x": 1005,
+   "y": 0,
+   "w": 323,
+   "h": 400,
+   "anchorX": 121,
+   "anchorY": 396
+  },
+  "kick": {
+   "x": 1330,
+   "y": 0,
+   "w": 353,
+   "h": 405,
+   "anchorX": 125,
+   "anchorY": 401
+  },
+  "block": {
+   "x": 1685,
+   "y": 0,
+   "w": 222,
+   "h": 416,
+   "anchorX": 104,
+   "anchorY": 412
+  },
+  "hit": {
+   "x": 0,
+   "y": 418,
+   "w": 291,
+   "h": 406,
+   "anchorX": 130,
+   "anchorY": 401
+  },
+  "down": {
+   "x": 293,
+   "y": 418,
+   "w": 433,
+   "h": 152,
+   "anchorX": 202,
+   "anchorY": 148
+  },
+  "punch_windup": {
+   "x": 728,
+   "y": 418,
+   "w": 324,
+   "h": 400,
+   "anchorX": 121,
+   "anchorY": 396
+  },
+  "kick_windup": {
+   "x": 1054,
+   "y": 418,
+   "w": 258,
+   "h": 407,
+   "anchorX": 111,
+   "anchorY": 403
+  },
+  "special_charge": {
+   "x": 1314,
+   "y": 418,
+   "w": 265,
+   "h": 411,
+   "anchorX": 131,
+   "anchorY": 407
+  },
+  "special_release": {
+   "x": 1581,
+   "y": 418,
+   "w": 358,
+   "h": 406,
+   "anchorX": 125,
+   "anchorY": 401
+  },
+  "crouch_block": {
+   "x": 0,
+   "y": 831,
+   "w": 275,
+   "h": 317,
+   "anchorX": 115,
+   "anchorY": 313
+  },
+  "crouch_punch": {
+   "x": 277,
+   "y": 831,
+   "w": 327,
+   "h": 318,
+   "anchorX": 115,
+   "anchorY": 314
+  },
+  "jump_kick": {
+   "x": 606,
+   "y": 831,
+   "w": 234,
+   "h": 368,
+   "anchorX": 131,
+   "anchorY": 363
+  },
+  "victory": {
+   "x": 842,
+   "y": 831,
+   "w": 222,
+   "h": 435,
+   "anchorX": 116,
+   "anchorY": 431
+  },
+  "fx": {
+   "x": 1066,
+   "y": 831,
+   "w": 353,
+   "h": 338,
+   "anchorX": 176,
+   "anchorY": 334
+  }
+ }
+}

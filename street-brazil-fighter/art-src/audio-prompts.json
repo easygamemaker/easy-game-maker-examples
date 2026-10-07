@@ -1,0 +1,1127 @@
+{
+  "note": "Every ElevenLabs request of the game: endpoint, model, voice id, parameters (including the prompt), date and estimated credits. Raw outputs live in art-src/audio-raw (gitignored). The real credit totals are in the README.",
+  "entries": [
+    {
+      "id": "ann_fight",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Fight!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "358b7759d7818c00d8b6f8673789b6c9",
+      "date": "2026-10-05",
+      "estimatedCredits": 10
+    },
+    {
+      "id": "ann_ko",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "K. O.!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "a6734c936a4315845f360da16dbbf3b0",
+      "date": "2026-10-05",
+      "estimatedCredits": 10
+    },
+    {
+      "id": "ann_p1_wins",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Player one wins!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "1c00bce9d876438a2b17027f0ba7fe29",
+      "date": "2026-10-05",
+      "estimatedCredits": 20
+    },
+    {
+      "id": "ann_p2_wins",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Player two wins!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "f362883a5b32a5b27f8d40efea444f70",
+      "date": "2026-10-05",
+      "estimatedCredits": 20
+    },
+    {
+      "id": "ann_perfect",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Perfect!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "691cc51a3eae263a3d38c02fbe9c1884",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "ann_round_1",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Round one!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "ece1b65bc6657706a446e1a20f9a10d8",
+      "date": "2026-10-05",
+      "estimatedCredits": 14
+    },
+    {
+      "id": "ann_round_2",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Round two!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "ac9eb973a1067f1f93dd2fa06520b411",
+      "date": "2026-10-05",
+      "estimatedCredits": 14
+    },
+    {
+      "id": "ann_round_final",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Final round!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "6861b23c9e51a1f01c15568357d888c7",
+      "date": "2026-10-05",
+      "estimatedCredits": 16
+    },
+    {
+      "id": "ann_time",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Time!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "5cda20093db7d7022f165030cb2d0652",
+      "date": "2026-10-05",
+      "estimatedCredits": 9
+    },
+    {
+      "id": "ann_you_lose",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "You lose!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "ccc68f475313ddd98703fc864dac77b0",
+      "date": "2026-10-05",
+      "estimatedCredits": 13
+    },
+    {
+      "id": "ann_you_win",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "You win!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "26340577ab1452026c48f645c6b564c9",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "block",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Metallic clang with a dull thud of a blocked strike, fighting game",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "4bd09397c95fbcd3795d8d1f8bceebad",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "craque_attack",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short athletic effort shout, young athletic man, no words, dry, fighting game voice",
+        "duration_seconds": 0.6,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "bb51236a20d366e42d13a42fd19954e8",
+      "date": "2026-10-05",
+      "estimatedCredits": 6
+    },
+    {
+      "id": "craque_hurt",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short young male pained grunt, young athletic man, no words, dry, fighting game voice",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "bf7d92e4fad8f5be608d30ba4d977e7e",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "craque_ko",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a young male cry of defeat, young athletic man, no words, dry, fighting game voice",
+        "duration_seconds": 1.2,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "3fad29cb97e886c74b128248a725d621",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "curupira_attack",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short deep gruff roar attack shout, gruff forest guardian, no words, dry, fighting game voice",
+        "duration_seconds": 0.6,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "bbf8c5d9880af90a1e59432f59f8c1f2",
+      "date": "2026-10-05",
+      "estimatedCredits": 6
+    },
+    {
+      "id": "curupira_hurt",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short deep pained grunt, gruff forest guardian, no words, dry, fighting game voice",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "5c6412adff0d0e8bcabee1212cda2056",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "curupira_ko",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a deep dramatic roar of defeat, gruff forest guardian, no words, dry, fighting game voice",
+        "duration_seconds": 1.2,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "98af5ee3813788357117491fedac1d20",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "dalva_attack",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short fierce female attack shout, fierce female warrior, no words, dry, fighting game voice",
+        "duration_seconds": 0.6,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "15d16a3a36faaa8441eec567fb48a127",
+      "date": "2026-10-05",
+      "estimatedCredits": 6
+    },
+    {
+      "id": "dalva_hurt",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short female pained grunt, fierce female warrior, no words, dry, fighting game voice",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "39533c8a9b3d331cbffab35af913f5c2",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "dalva_ko",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a dramatic female cry of defeat, fierce female warrior, no words, dry, fighting game voice",
+        "duration_seconds": 1.2,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "dc3e950fb9dad8d0bcfcc0c37fca4684",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "hit",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Fleshy body hit impact, a punch landing on a body, punchy, arcade fighting game",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "592442148750c251c4bb2f98295a85de",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "hit_2",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Solid blow landing on a torso, dull slap and thump, arcade fighting game",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "d2a3ec654324048bc85eb39d89ed43de",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "jump",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Short light jump whoosh, quick and airy, arcade game",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.5,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "d1130f452db9fae75d43b6664c9adedf",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "kick",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Heavy kick whoosh and a thick thudding impact, arcade fighting game",
+        "duration_seconds": 0.8,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "1e079a24218d3210c0c2d81d2929f19b",
+      "date": "2026-10-05",
+      "estimatedCredits": 8
+    },
+    {
+      "id": "kick_2",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Strong roundhouse kick swoosh then a deep meaty impact, fighting game",
+        "duration_seconds": 0.8,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "a9f7249e9e881e66260237366f3d7f25",
+      "date": "2026-10-05",
+      "estimatedCredits": 8
+    },
+    {
+      "id": "knockdown",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "A body falling hard on the ground with a heavy thump and a short slide, fighting game",
+        "duration_seconds": 0.9,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "bde0a1a695afbe722c2815dc6defa0ec",
+      "date": "2026-10-05",
+      "estimatedCredits": 9
+    },
+    {
+      "id": "ko",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Huge dramatic knockout impact boom, a cinematic hit with a long reverb tail",
+        "duration_seconds": 1.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "8308f2f053a88b09d77f80893859aa23",
+      "date": "2026-10-05",
+      "estimatedCredits": 15
+    },
+    {
+      "id": "land",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Soft landing thud of feet hitting the ground, short",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.5,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "194d23595df07ee68fc0b940a8e416f6",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "music_fight_a",
+      "kind": "music",
+      "endpoint": "/v1/music",
+      "model": "music_v2_5",
+      "voiceId": null,
+      "params": {
+        "prompt": "Energetic samba rock fighting game battle track at 120 BPM in 4/4. Driving drums, capoeira berimbau and atabaque percussion, funky electric bass, distorted rhythm guitar, cavaquinho and punchy brass stabs. Tension builds section by section with a strong hook. Loopable, starts and ends on the same groove. Instrumental only, no vocals, no singing, no lyrics.",
+        "music_length_ms": 80000,
+        "force_instrumental": true,
+        "model_id": "music_v2_5"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "a0285b671c43d05d29f699fa546949e3",
+      "date": "2026-10-05",
+      "estimatedCredits": 1000
+    },
+    {
+      "id": "music_fight_b",
+      "kind": "music",
+      "endpoint": "/v1/music",
+      "model": "music_v2_5",
+      "voiceId": null,
+      "params": {
+        "prompt": "Funk carioca inspired fighting game battle track at 130 BPM in 4/4. Heavy tamborzao beat, agogo bells, cuica, capoeira atabaque percussion, deep sub bass and a gritty synth and guitar riff. Aggressive and driving, tension builds. Loopable, starts and ends on the same groove. Instrumental only, no vocals, no singing, no lyrics.",
+        "music_length_ms": 77538,
+        "force_instrumental": true,
+        "model_id": "music_v2_5"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "2824c52e69a85882ddf8a53002d220be",
+      "date": "2026-10-05",
+      "estimatedCredits": 970
+    },
+    {
+      "id": "music_ko",
+      "kind": "music",
+      "endpoint": "/v1/music",
+      "model": "music_v2_5",
+      "voiceId": null,
+      "params": {
+        "prompt": "Short dramatic defeat sting, a low brass and berimbau phrase with a slow falling melody and a final heavy drum hit. Instrumental only, no vocals, no singing, no lyrics.",
+        "music_length_ms": 7000,
+        "force_instrumental": true,
+        "model_id": "music_v2_5"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "ced211e2f8a8b35bd63f1e666ad601a1",
+      "date": "2026-10-05",
+      "estimatedCredits": 88
+    },
+    {
+      "id": "music_select",
+      "kind": "music",
+      "endpoint": "/v1/music",
+      "model": "music_v2_5",
+      "voiceId": null,
+      "params": {
+        "prompt": "Relaxed Brazilian groove for a character select screen at 90 BPM in 4/4. Soft samba rhythm with brushed pandeiro, nylon guitar, light cavaquinho, mellow bass and a playful flute melody. Warm and laid back with a little anticipation. Loopable, starts and ends on the same groove. Instrumental only, no vocals, no singing, no lyrics.",
+        "music_length_ms": 58667,
+        "force_instrumental": true,
+        "model_id": "music_v2_5"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "66e6554f904282cbd2ac12ec141da62a",
+      "date": "2026-10-05",
+      "estimatedCredits": 734
+    },
+    {
+      "id": "music_title",
+      "kind": "music",
+      "endpoint": "/v1/music",
+      "model": "music_v2_5",
+      "voiceId": null,
+      "params": {
+        "prompt": "Heroic Brazilian fighting game title theme at 100 BPM in 4/4. Berimbau, atabaque and pandeiro percussion, bright cavaquinho strumming, warm acoustic bass and a proud brass and guitar melody that rises and resolves. Confident, epic and joyful. Loopable, starts and ends on the same groove. Instrumental only, no vocals, no singing, no lyrics.",
+        "music_length_ms": 72000,
+        "force_instrumental": true,
+        "model_id": "music_v2_5"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "ffc2433feb3bfe99cdcd85c849b06e8c",
+      "date": "2026-10-05",
+      "estimatedCredits": 900
+    },
+    {
+      "id": "music_victory",
+      "kind": "music",
+      "endpoint": "/v1/music",
+      "model": "music_v2_5",
+      "voiceId": null,
+      "params": {
+        "prompt": "Short triumphant victory jingle with bright brass fanfare, cavaquinho and joyful samba percussion, ending on a strong final chord. Instrumental only, no vocals, no singing, no lyrics.",
+        "music_length_ms": 12000,
+        "force_instrumental": true,
+        "model_id": "music_v2_5"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "54545b6dc17f3e0ea873ffbf81f06c70",
+      "date": "2026-10-05",
+      "estimatedCredits": 150
+    },
+    {
+      "id": "name_craque",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Craque da Várzea!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "fd205ceb15826777fe48c8a1c68abdbc",
+      "date": "2026-10-05",
+      "estimatedCredits": 21
+    },
+    {
+      "id": "name_curupira",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Curupira!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "39406617560d2df7cf6cf0e2426100e5",
+      "date": "2026-10-05",
+      "estimatedCredits": 13
+    },
+    {
+      "id": "name_dalva",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Cangaceira Dalva!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "99258b6d866cfb278da6f7b931fe3437",
+      "date": "2026-10-05",
+      "estimatedCredits": 21
+    },
+    {
+      "id": "name_rosa",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Passista Rosa!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "9a99d312ab75c149452395d7d921114d",
+      "date": "2026-10-05",
+      "estimatedCredits": 18
+    },
+    {
+      "id": "name_saci",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Saci!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "a5d1879d5804404591523312c15b66b3",
+      "date": "2026-10-05",
+      "estimatedCredits": 9
+    },
+    {
+      "id": "name_tiao",
+      "kind": "tts",
+      "endpoint": "/v1/text-to-speech/VR6AewLTigWG4xSOukaG",
+      "model": "eleven_multilingual_v2",
+      "voiceId": "VR6AewLTigWG4xSOukaG",
+      "params": {
+        "text": "Mestre Tião!",
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+          "stability": 0.3,
+          "similarity_boost": 0.8,
+          "style": 0.7,
+          "use_speaker_boost": true
+        }
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "7c68333180917817b7a933757c7b22aa",
+      "date": "2026-10-05",
+      "estimatedCredits": 16
+    },
+    {
+      "id": "pause",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Short pause menu blip, a quick descending two note tone, video game user interface",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.7,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "b4c3d30d4a27cf5b9e735aa29072644d",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "punch",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Quick martial arts punch whoosh followed by a light snappy impact, arcade fighting game",
+        "duration_seconds": 0.6,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "88910171d5253906310e254b48cb277c",
+      "date": "2026-10-05",
+      "estimatedCredits": 6
+    },
+    {
+      "id": "punch_2",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Fast jab whoosh and a crisp light punch impact on a body, fighting game",
+        "duration_seconds": 0.6,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "42db53db4492c2d17aac693300d6c694",
+      "date": "2026-10-05",
+      "estimatedCredits": 6
+    },
+    {
+      "id": "rosa_attack",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short energetic female exclamation attack shout, energetic female dancer, no words, dry, fighting game voice",
+        "duration_seconds": 0.6,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "60c4bfcb5340b08e3546f843e79f9f8d",
+      "date": "2026-10-05",
+      "estimatedCredits": 6
+    },
+    {
+      "id": "rosa_hurt",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short female pained gasp, energetic female dancer, no words, dry, fighting game voice",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "3406880d79f6fcc199c5f721faf5f01d",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "rosa_ko",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a female cry of defeat, energetic female dancer, no words, dry, fighting game voice",
+        "duration_seconds": 1.2,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "db157b90257f169087eb383e5c5e95fd",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "round_start",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Large gong strike with a long ringing metallic tail, fighting game round start",
+        "duration_seconds": 1.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "0364311dc19c6169709e64933a1be781",
+      "date": "2026-10-05",
+      "estimatedCredits": 15
+    },
+    {
+      "id": "saci_attack",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short high pitched mischievous cackle shout, mischievous trickster boy, no words, dry, fighting game voice",
+        "duration_seconds": 0.6,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "5c8f9d519fbe0b6bcbe1a32155e7eec0",
+      "date": "2026-10-05",
+      "estimatedCredits": 6
+    },
+    {
+      "id": "saci_hurt",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short high pitched pained yelp, mischievous trickster boy, no words, dry, fighting game voice",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "fd5c276168fcd6d9086abd1b264295c0",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "saci_ko",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a comic high pitched cry of defeat, mischievous trickster boy, no words, dry, fighting game voice",
+        "duration_seconds": 1.2,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "4d282d2b5dedd4a6446641a79ac18737",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "sp_craque",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Fireball launched by a kick, a flaming whoosh with a soccer ball thump",
+        "duration_seconds": 1,
+        "prompt_influence": 0.5,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "8faf2a88cee2e6e56a3aa8630b9d24d0",
+      "date": "2026-10-05",
+      "estimatedCredits": 10
+    },
+    {
+      "id": "sp_curupira",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Massive ground stomp with an earth shockwave, deep rumble and cracking stone",
+        "duration_seconds": 1.2,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "68c83ba005acbf37f150cc1b346d303d",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "sp_dalva",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Blade slash with a rushing energy wave, a machete cut releasing a sharp whooshing arc",
+        "duration_seconds": 1,
+        "prompt_influence": 0.5,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "ce83a7e2b081f43f92eb9951d2b42c96",
+      "date": "2026-10-05",
+      "estimatedCredits": 10
+    },
+    {
+      "id": "sp_rosa",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Burst of feathers, a bright fluttering rustle with a sparkling magical swirl",
+        "duration_seconds": 1.2,
+        "prompt_influence": 0.5,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "71ff666d6212366192c4c088e5cd75e4",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "sp_saci",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Small mystical whirlwind, wind gust swirling and spinning with a playful whistling tone",
+        "duration_seconds": 1.2,
+        "prompt_influence": 0.5,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "f828aff0ff64a80534668aa512caa247",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "sp_tiao",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Fast spinning whoosh, a capoeira dash with wind rushing past and a swirling spin",
+        "duration_seconds": 1.2,
+        "prompt_influence": 0.5,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "593265ce3034f5b10267e247b0ab57d5",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "tiao_attack",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short sharp martial arts attack shout, male capoeira master, no words, dry, fighting game voice",
+        "duration_seconds": 0.6,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "b161d97fc80cce15f79024bb5612829b",
+      "date": "2026-10-05",
+      "estimatedCredits": 6
+    },
+    {
+      "id": "tiao_hurt",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a short male pained grunt, male capoeira master, no words, dry, fighting game voice",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "726f3ad156e0a4c0ee5577dc7b96f1ad",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "tiao_ko",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "a dramatic male cry of defeat, male capoeira master, no words, dry, fighting game voice",
+        "duration_seconds": 1.2,
+        "prompt_influence": 0.6,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "14c4d747c42d884c94614c62cdd3cdb6",
+      "date": "2026-10-05",
+      "estimatedCredits": 12
+    },
+    {
+      "id": "ui_move",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Soft short menu cursor blip, a tiny clean tick, video game user interface",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.7,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "5e6685580f02c598f9ba46b3f80c9b43",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    },
+    {
+      "id": "ui_select",
+      "kind": "sfx",
+      "endpoint": "/v1/sound-generation",
+      "model": "eleven_text_to_sound_v2",
+      "voiceId": null,
+      "params": {
+        "text": "Bright confirm chime for a menu selection, short and happy, video game user interface",
+        "duration_seconds": 0.5,
+        "prompt_influence": 0.7,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "cacheKey": "81931a12ff99687e1cbd70db998b435b",
+      "date": "2026-10-05",
+      "estimatedCredits": 5
+    }
+  ]
+}

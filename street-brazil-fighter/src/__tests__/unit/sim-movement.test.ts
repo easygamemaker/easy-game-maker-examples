@@ -108,12 +108,45 @@ describe('facing', () => {
 });
 
 describe('pushboxes and separation', () => {
-  it('grounded fighters never overlap: walking pushes the opponent', () => {
+  it('grounded fighters never overlap: the one who walks into a standing opponent is the one stopped', () => {
     const run = runFrames(fight(700, 760), 60, () => [input({ right: true }), N]);
     for (const s of run.states) {
       expect(s.fighters[1].x - s.fighters[0].x).toBeGreaterThanOrEqual(PUSHBOX_WIDTH - 1e-9);
     }
-    expect(run.state.fighters[1].x).toBeGreaterThan(800);
+    // rule change of the polish round: the standing fighter is not shoved along, the walker gives way
+    expect(run.state.fighters[1].x).toBe(760);
+    expect(run.state.fighters[0].x).toBeCloseTo(760 - PUSHBOX_WIDTH);
+  });
+
+  it('when both fighters walk into each other the overlap is shared by how far each one travelled', () => {
+    const a = { ...createFighter(0, 'craque'), x: 500 };
+    const b = { ...createFighter(1, 'craque'), x: 520 };
+    // a travelled 6 px towards b, b travelled 2 px towards a
+    const prev = [{ ...a, x: 494 }, { ...b, x: 522 }] as const;
+    const [ra, rb] = resolvePushboxes([a, b], prev);
+    expect(PUSHBOX_WIDTH - 20).toBeGreaterThan(0);
+    const overlap = PUSHBOX_WIDTH - 20;
+    expect(ra.x).toBeCloseTo(500 - overlap * 0.75);
+    expect(rb.x).toBeCloseTo(520 + overlap * 0.25);
+    expect(rb.x - ra.x).toBeCloseTo(PUSHBOX_WIDTH);
+  });
+
+  it('a dash special never carries the attacker into the defender and stops at the minimum separation', () => {
+    const base = fight(600, 900);
+    const run = runFrames({ ...base, fighters: [{ ...base.fighters[0], meter: 100 }, base.fighters[1]] }, 90, (i) => [input({ special: i === 0 }), N]);
+    for (const s of run.states) expect(s.fighters[1].x - s.fighters[0].x).toBeGreaterThanOrEqual(PUSHBOX_WIDTH - 1e-9);
+  });
+
+  it('the attacker is pushed back when the defender is against the wall (hit and block)', () => {
+    for (const block of [false, true]) {
+      const start = startFight({ p1: 'craque', p2: 'craque', hitStopFrames: 0 });
+      const placed = { ...start, fighters: [{ ...start.fighters[0], x: MAX_X - PUSHBOX_WIDTH, facing: 1 as const }, { ...start.fighters[1], x: MAX_X, facing: -1 as const }] as const };
+      const run = runFrames(placed, 60, (i) => [input({ kick: i === 0 }), block ? input({ block: true }) : N]);
+      const last = run.state.fighters;
+      expect(last[1].x).toBeLessThanOrEqual(MAX_X);
+      expect(last[0].x).toBeLessThan(MAX_X - PUSHBOX_WIDTH - 1);
+      expect(last[1].x - last[0].x).toBeGreaterThanOrEqual(PUSHBOX_WIDTH - 1e-9);
+    }
   });
 
   it('a cornered fighter cannot be pushed through the wall', () => {

@@ -3,6 +3,7 @@ import type { Difficulty, MatchState } from '../sim';
 import type { ControlHub } from './controls';
 import type { GameAssets } from './assets';
 import type { Query } from './query';
+import type { AudioDebug } from '../audio/director';
 
 export type Mode = '1p' | '2p';
 
@@ -54,12 +55,14 @@ export interface SbfHook {
   camX: number;
   /** Atlas frame name drawn for each fighter in the last frame. */
   shown: readonly [string, string];
+  /** What the audio director was asked to play (see src/audio/director.ts). */
+  audio: AudioDebug | null;
 }
 
 /** Returns the automation hook, creating it on first use. */
 export function hook(): SbfHook {
   if (!window.__SBF__) {
-    window.__SBF__ = { scene: 'boot', mode: '1p', match: null, frame: 0, done: false, winner: null, speed: 1, paused: false, camX: 0, shown: ['', ''] };
+    window.__SBF__ = { scene: 'boot', mode: '1p', match: null, frame: 0, done: false, winner: null, speed: 1, paused: false, camX: 0, shown: ['', ''], audio: null };
   }
   return window.__SBF__;
 }

@@ -69,6 +69,7 @@ export class CharacterSelectScene extends Scene {
   override onResume(): void {
     this.leaving = false;
     hook().scene = 'select';
+    this.ctx.assets.audio.music('music_select');
   }
 
   private cardPos(i: number): { x: number; y: number } {
@@ -143,10 +144,12 @@ export class CharacterSelectScene extends Scene {
       const next = moveGrid(this.cursor[p], COLS, this.roster.length, dx, dy);
       this.cursor = p === 0 ? [next, this.cursor[1]] : [this.cursor[0], next];
       assets.play('ui_move');
+      this.speak(next);
       this.refresh();
     } else if (e.confirm) {
       this.locked = p === 0 ? [true, this.locked[1]] : [this.locked[0], true];
       assets.play('ui_select');
+      this.speak(this.cursor[p]);
       if (p === 0 && this.ctx.session.mode === '1p') {
         this.shuffle = SHUFFLE_FRAMES;
         this.cursors[1].visible = true;
@@ -156,6 +159,12 @@ export class CharacterSelectScene extends Scene {
       this.leaving = true;
       void goto(this.ctx, 'title');
     }
+  }
+
+  /** The announcer reads the name of the fighter under a cursor. */
+  private speak(index: number | undefined): void {
+    const c = index === undefined ? undefined : this.roster[index];
+    if (c) this.ctx.assets.audio.speakName(c.id);
   }
 
   private cpuPick(): void {
@@ -169,6 +178,7 @@ export class CharacterSelectScene extends Scene {
     if (this.shuffle === 0) {
       this.cursor = [this.cursor[0], Math.floor(Math.random() * this.roster.length)];
       this.locked = [true, true];
+      this.speak(this.cursor[1]);
       this.refresh();
     }
   }
