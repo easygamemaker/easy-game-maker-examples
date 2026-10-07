@@ -29,7 +29,7 @@ export class GameAssets {
 
   constructor(private readonly app: App) {
     this.audio = new AudioDirector(app.audio, browserStore());
-    this.audio.attachBrowser(window);
+    this.audio.attachBrowser(window, app.input);
   }
 
   hasFighter(id: string): boolean {

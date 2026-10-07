@@ -15,6 +15,12 @@ export interface AudioEngine {
   channel(name: string): { stop(key: string): void; isPlaying(key: string): boolean };
 }
 
+/** The engine's input manager, reduced to what the director needs. */
+export interface KeySource {
+  on(event: string, handler: (e: unknown) => void): void;
+  off(event: string, handler: (e: unknown) => void): void;
+}
+
 export interface AudioLogEntry {
   readonly n: number;
   readonly kind: 'sfx' | 'voice' | 'music';
@@ -202,7 +208,8 @@ export class AudioDirector {
     for (const id of Object.keys(this.mixer.gains) as MusicId[]) {
       this.ensurePlaying(id);
       const g = outputGain(this.mixer, id);
-      playing[id] = Number(g.toFixed(3));
+      // a track that failed to load is requested but never plays: only the ones really started are listed
+      if (this.engine.channel('music').isPlaying(soundUrl(id))) playing[id] = Number(g.toFixed(3));
       this.engine.setSoundVolume(soundUrl(id), g, 'music');
     }
     this.debug.playing = playing;
@@ -228,20 +235,24 @@ export class AudioDirector {
 
   // ---- browser wiring -------------------------------------------------------
 
-  /** Hooks the first gesture, the M key and tab visibility. Returns a function that removes the listeners. */
-  attachBrowser(win: Window & typeof globalThis): () => void {
+  /**
+   * Hooks the first gesture, the M key and tab visibility. Returns a function that removes the listeners.
+   * Keys come from the engine's input manager (`keys`): the engine swallows keydown events on the window
+   * (stopImmediatePropagation), so a plain window listener would never see them. Pointer presses are not swallowed.
+   */
+  attachBrowser(win: Window & typeof globalThis, keys: KeySource): () => void {
     const gesture = (): void => this.unlock();
-    const key = (e: KeyboardEvent): void => {
+    const key = (e: { code: string; repeat: boolean }): void => {
       this.unlock();
       if (e.code === 'KeyM' && !e.repeat) this.toggleMute();
     };
     const vis = (): void => this.setHidden(win.document.hidden);
-    win.addEventListener('keydown', key, true);
+    keys.on('keydown', key as (e: unknown) => void);
     win.addEventListener('pointerdown', gesture, true);
     win.document.addEventListener('visibilitychange', vis);
     vis();
     return () => {
-      win.removeEventListener('keydown', key, true);
+      keys.off('keydown', key as (e: unknown) => void);
       win.removeEventListener('pointerdown', gesture, true);
       win.document.removeEventListener('visibilitychange', vis);
     };

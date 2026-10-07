@@ -352,6 +352,7 @@ describe('audio director', () => {
     d.update(0.1);
     expect(f.played.map((p) => p.key)).toEqual(['assets/audio/hit.mp3']);
     expect(d.debug.failed).toEqual(['block: failed to load']);
+    expect(d.debug.playing).toEqual({}); // the requested track never loaded, so nothing is reported as playing
     expect(d.debug.log.filter((l) => l.kind === 'sfx').map((l) => l.id)).toEqual(['hit']);
   });
 

@@ -17,6 +17,8 @@ import { activeHitbox, hurtboxes, projectileBox } from '../sim/geometry';
 import { METER_MAX, createRng, nextInt, type MatchState, type SimEvent, type WorldBox } from '../sim';
 
 const RESULT_DELAY_FRAMES = 200;
+/** Above this simulation speed (tests that fast-forward) the sounds would pile up, so the fight stays silent. */
+const MAX_AUDIBLE_SPEED = 4;
 
 const outline = (box: WorldBox, color: string): RectShape => {
   const r = new RectShape({ width: box.w, height: box.h, fill: '#00000000', stroke: color, strokeWidth: 2 });
@@ -250,9 +252,9 @@ export class FightScene extends Scene {
     this.afterMatchCheck(edges.confirm);
   }
 
-  /** Maps the step's sim events to sounds (src/audio/mapping.ts). Fast-forward runs (speed above 1) stay silent. */
+  /** Maps the step's sim events to sounds (src/audio/mapping.ts). Fast-forward runs (speed above 4) stay silent. */
   private playSounds(events: readonly SimEvent[]): void {
-    if (hook().speed > 1 || events.length === 0) return;
+    if (hook().speed > MAX_AUDIBLE_SPEED || events.length === 0) return;
     const cues = cuesForEvents(events, { match: this.runner.match, mode: this.ctx.session.mode });
     this.ctx.assets.audio.playAll(cues);
   }
